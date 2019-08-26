@@ -1,0 +1,92 @@
+funcList:
+  func: int
+  main: int
+funcs:
+  funcs:
+  - blk:
+      contents:
+        name: stmts
+        stmts:
+        - exp:
+            name: lit
+            type: int
+            value: 0
+          name: vardeclstmt
+          vdecl:
+            node: vdecl
+            type: int
+            var: a
+        - exp:
+            exp:
+              lhs:
+                name: varval
+                type: int
+                var: a
+              name: binop
+              op: add
+              rhs:
+                name: varval
+                type: int
+                var: n
+              type: int
+            name: assign
+            type: int
+            var: a
+          name: expstmt
+        - exp:
+            name: varval
+            type: int
+            var: a
+          name: ret
+      knownVariables:
+        a: int
+        n: int
+      name: blk
+    globid: func
+    name: func
+    ret_type: int
+    vdecls:
+      name: vdecls
+      vars:
+      - node: vdecl
+        type: int
+        var: n
+  - blk:
+      contents:
+        name: stmts
+        stmts:
+        - exp:
+            globid: func
+            name: funccall
+            params:
+              exps:
+              - name: lit
+                type: int
+                value: 100
+            type: int
+          name: vardeclstmt
+          vdecl:
+            node: vdecl
+            type: int
+            var: b
+        - exp:
+            lhs:
+              name: varval
+              type: int
+              var: b
+            name: binop
+            op: add
+            rhs:
+              name: lit
+              type: int
+              value: 5
+            type: int
+          name: ret
+      knownVariables:
+        b: int
+      name: blk
+    globid: main
+    name: func
+    ret_type: int
+  name: funcs
+name: prog
