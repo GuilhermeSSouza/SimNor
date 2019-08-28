@@ -51,11 +51,18 @@ varDebug.set(False)
 
 
 def getRadio():
-	selection = 'O simulador está usando as Regras Lógicas:  ' + str(var.get())
-	label['text'] = selection
+	selection = '\n  O simulador está usando as Regras Lógicas:  ' + str(var.get() )
+	label.insert("end-1c", selection)
+
+
 
 def clearCode():
 	textinput.delete('1.0', 'end-1c')
+
+
+
+def clear_lower():
+	label.delete('1.0', 'end-1c')
 
 def openArquivo():
 	try:
@@ -141,18 +148,20 @@ def inputUse():
 
 
 def execultaSimuldor(code):
-	label['text'] = '********** SimNor ********** \n \n \n'  + 'Return main::   '+ str(main.executa(code, var.get()))
+	result = ' \n ********** SimNor ********** \n \n \n'  + 'Return main::   '+ str(main.executa(code, var.get()))
+	label.insert("end-1c", result)
 
 
 
 
 def debugButtom(debug):
+	dado = '\n'
 	if debug == 1 :
 		varDebug.set(False)
 	else:
 		varDebug.set(True)
-
-	label['text'] = varDebug.get()
+	dado+= str(varDebug.get())
+	label.insert("end-1c",dado)
 
 
 
@@ -179,8 +188,8 @@ file.add_command(label = 'Exit',  font = NORM_FONT, command = root.destroy)
 #Adding Regras 
 regra = tk.Menu(menubar, tearoff = 0)
 menubar.add_cascade(label ='Regras', menu = regra, font = NORM_FONT)
-regra.add_command(label = 'Regras A', font = NORM_FONT ,command = lambda: lerRegraA())
-regra.add_command(label = 'Regras B', font = NORM_FONT, command = lambda: lerRegraB())
+regra.add_command(label = 'R. Avançadas', font = NORM_FONT ,command = lambda: lerRegraA())
+regra.add_command(label = 'R. Básicas', font = NORM_FONT, command = lambda: lerRegraB())
 
 
 #Adding Zoom +
@@ -204,7 +213,7 @@ help_.add_command(label = 'Issues/Git', command = None)
 
 
 frame = tk.Frame(root, bg='#FDF5E9', bd=5)
-frame.place(relx=0.50, rely=0.01, relwidth=0.85, relheight=0.7, anchor='n')
+frame.place(relx=0.53, rely=0.03, relwidth=0.85, relheight=0.7, anchor='n')
 
 
 
@@ -216,12 +225,12 @@ frame.place(relx=0.50, rely=0.01, relwidth=0.85, relheight=0.7, anchor='n')
 
 
 #RadioButtom
+R2 = Radiobutton(root, text="R. Avançada", variable=var, value=2, command=getRadio)
+R2.place(relx = 0.01, rely = 0.04, anchor = NW )
 
-R1 = Radiobutton(root,text="Regras B", variable=var, value=1, command=getRadio)
-R1.place(relx = 0.01, rely = 0.04, anchor = NW )
 
-R2 = Radiobutton(root, text="Regras A", variable=var, value=2, command=getRadio)
-R2.place(relx = 0.01, rely = 0.08, anchor = NW )
+R1 = Radiobutton(root,text="R. Básica", variable=var, value=1, command=getRadio)
+R1.place(relx = 0.01, rely = 0.08, anchor = NW )
 
 
 
@@ -235,14 +244,14 @@ R2.place(relx = 0.01, rely = 0.08, anchor = NW )
 
 #Input text code
 
-textinput = tk.Text(frame, font=(NORM_FONT, 15), )
+textinput = tk.Text(frame, font=(NORM_FONT, 15) )
 textinput.place(relwidth=0.80, relheight=1)
 
-scrollBar = tk.Scrollbar(frame)
-scrollBar.place(relx=0.81, rely = 0.01, relwidth=0.03)
+scrollBar_input = tk.Scrollbar(frame)
+scrollBar_input.place(relx=0.81, rely = 0.01, relwidth=0.03)
 
-scrollBar.config(command=textinput.yview)
-textinput.config(yscrollcommand=scrollBar.set)
+scrollBar_input.config(command=textinput.yview)
+textinput.config(yscrollcommand=scrollBar_input.set)
 
 
 
@@ -259,11 +268,23 @@ button.place(relx=0.85, rely = 0, relheight=0.15, relwidth=0.15)
 
 
 #Show result code compile
-lower_frame = tk.Frame(root, bg='#ffffff', bd=3)
-lower_frame.place(relx=0.50, rely=0.75, relwidth=0.85, relheight=0.2, anchor='n')
+lower_frame = tk.Frame(root, bg='#FDF5E9', bd=3)
+lower_frame.place(relx=0.53, rely=0.78, relwidth=0.85, relheight=0.2, anchor='n')
 
-label = tk.Label(lower_frame, bg = '#ffffff', font = (NORM_FONT, 15), anchor = 'n')
-label.place(relwidth=0.98, relheight=0.98)
+label = tk.Text(lower_frame, bg = '#ffffff', font = (NORM_FONT, 15))
+label.place(relwidth=0.80, relheight=1)
+
+
+scrollBar = tk.Scrollbar(lower_frame)
+scrollBar.place(relx=0.8, rely = 0.01, relwidth=0.03)
+
+scrollBar.config(command=label.yview)
+label.config(yscrollcommand=scrollBar.set)
+
+
+
+button = tk.Button(lower_frame, bg = '#BDB76B', text="Clear", font=(NORM_FONT, 15), command = lambda: clear_lower())
+button.place(relx=0.85, rely = 0.45, relheight=0.55, relwidth=0.15)
 
 
 

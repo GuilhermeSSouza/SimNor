@@ -12,6 +12,8 @@ llvm.initialize_native_asmprinter()
 
 i32 = ir.IntType(32)
 i1 = ir.IntType(1)
+i_1 = ir.Constant(i32, -1)
+i_0 = ir.Constant(i32, 0)
 f32 = ir.FloatType()
 
 
@@ -22,10 +24,10 @@ def ir_type(string):
         return ir.PointerType(f32)
     if "int" in string:
         return i32
-    if "sfloat" in string:
-        return f32
-    if "float" in string:
-        return f32
+    #if "sfloat" in string:
+     #   return f32
+    #if "float" in string:
+     #   return f32
     return ir.VoidType()
 
 
@@ -326,6 +328,8 @@ def ifStmt(ast, builder, symbols):
     if returned:
         endif = builder.block
         builder.function.blocks.remove(endif)
+
+    print(returned)
     return returned
 
 
@@ -410,6 +414,10 @@ def binop(ast, symbols, builder, target_type, cint = False):
     rhs = expression(ast["rhs"], symbols, builder, cint = cint)  ###
     lhs = extract_value(lhs, builder)
     rhs = extract_value(rhs, builder)
+
+    print(lhs)
+    print(rhs)
+
     exp_type = target_type
     op = ast["op"]
 
@@ -453,7 +461,7 @@ def binop(ast, symbols, builder, target_type, cint = False):
             elif op == 'add':
                 return builder.add(lhs, rhs, name="add")
             elif op == 'sub':
-                return builder.sub(lhs, rhs, name='sub')
+                return builder.sub(lhs, rhs, name = 'sub')
             elif op == 'eq':
                 return builder.icmp_signed('==', lhs, rhs, name="eq")
             elif op == 'lt':
@@ -486,56 +494,56 @@ def binop(ast, symbols, builder, target_type, cint = False):
     except AttributeError as err:
         raise RuntimeError('Error processing: ' + str(ast), err)
 
-def check_int(lhs, rhs, builder, op):
-    result = None
-    if op == 'mul':
-        result = builder.smul_with_overflow(lhs, rhs, name='mul')
-    elif op == 'div':
-        # rhs = builder.uitofp(rhs, f32)
-        # rhs = builder.fdiv(ir.Constant(f32, 1), rhs, name="div")
-        # return check_int(lhs, rhs, builder, 'mul')
+# def check_int(lhs, rhs, builder, op):
+#     result = None
+#     if op == 'mul':
+#         result = builder.smul_with_overflow(lhs, rhs, name='mul')
+#     elif op == 'div':
+#         # rhs = builder.uitofp(rhs, f32)
+#         # rhs = builder.fdiv(ir.Constant(f32, 1), rhs, name="div")
+#         # return check_int(lhs, rhs, builder, 'mul')
 
-        a = builder.sdiv(lhs, rhs, name='div')
+#         a = builder.sdiv(lhs, rhs, name='div')
 
-        l = builder.icmp_signed('==', lhs, ir.Constant(i32,-2147483648 ), name="eq")
-        r = builder.icmp_signed('!=', rhs, ir.Constant(i32,-1), name="nq")
-        cond = builder.mul(l, r, name='mul')
+#         l = builder.icmp_signed('==', lhs, ir.Constant(i32,-2147483648 ), name="eq")
+#         r = builder.icmp_signed('!=', rhs, ir.Constant(i32,-1), name="nq")
+#         cond = builder.mul(l, r, name='mul')
 
-        with builder.if_else(cond) as (then, otherwise):
-            with then:
-                pass
-            with otherwise:
-                lhs = check_int(lhs, ir.Constant(i32, -1), builder, 'mul')
-                rhs = check_int(rhs, ir.Constant(i32, -1), builder, 'mul')
-        return a
+#         with builder.if_else(cond) as (then, otherwise):
+#             with then:
+#                 pass
+#             with otherwise:
+#                 lhs = check_int(lhs, ir.Constant(i32, -1), builder, 'mul')
+#                 rhs = check_int(rhs, ir.Constant(i32, -1), builder, 'mul')
+#         return a
 
-    elif op == 'add':
-        result = builder.sadd_with_overflow(lhs, rhs, name="add")
-    elif op == 'sub':
-        result = builder.ssub_with_overflow(lhs, rhs, name='sub')
+#     elif op == 'add':
+#         result = builder.sadd_with_overflow(lhs, rhs, name="add")
+#     elif op == 'sub':
+#         result = builder.ssub_with_overflow(lhs, rhs, name='sub')
     
-    if result is not None:
-        is_overflow = builder.extract_value(result, 1)
+#     if result is not None:
+#         is_overflow = builder.extract_value(result, 1)
 
-        with builder.if_then(is_overflow):
-            overflows(None, builder)
-
-
-        return builder.extract_value(result, 0)
+#         with builder.if_then(is_overflow):
+#             overflows(None, builder)
 
 
-    if op == 'eq':
-        return builder.icmp_signed('==', lhs, rhs, name="eq")
-    elif op == 'df':
-        return builder.icmp_signed('!=', lhs, rhs, name="df")
-    elif op == 'lt':
-        return builder.icmp_signed('<', lhs, rhs, name="lt")
-    elif op == 'gt':
-        return builder.icmp_signed('>', lhs, rhs, name="gt")
-    elif op == 'el':
-        return builder.icmp_signed('<=', lhs, rhs, name="el")
-    elif op == 'lg':
-        return builder.icmp_signed('>=', lhs, rhs, name="lg")
+#         return builder.extract_value(result, 0)
+
+
+#     if op == 'eq':
+#         return builder.icmp_signed('==', lhs, rhs, name="eq")
+#     elif op == 'df':
+#         return builder.icmp_signed('!=', lhs, rhs, name="df")
+#     elif op == 'lt':
+#         return builder.icmp_signed('<', lhs, rhs, name="lt")
+#     elif op == 'gt':
+#         return builder.icmp_signed('>', lhs, rhs, name="gt")
+#     elif op == 'el':
+#         return builder.icmp_signed('<=', lhs, rhs, name="el")
+#     elif op == 'lg':
+#         return builder.icmp_signed('>=', lhs, rhs, name="lg")
 
 
 
@@ -569,14 +577,14 @@ def deference(builder, p):
 def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
     name = ast[c.name]
     try:
-        if name == c.uop:
-            return uop(ast, symbols, builder, cint)
+        #if name == c.uop:
+           # return uop(ast, symbols, builder, cint)
         if name == c.litExp:
             if cint:
                 limit = 2147483647
                 if neg:
                     limit += 1
-                if ast['value'] > limit or ast['value'] < -2147483648:
+                if ast['value'] > limit or ast['value'] <= i_1:
                     overflows(ast, builder)
                 if exception and ast['value'] == 2147483648:
                     raise Error2147483648
@@ -611,7 +619,8 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
             return builder.call(fn, parameters)
         if name == c.binop:
             target_type = ast[c.typ]
-            return binop(ast, symbols, builder, target_type, cint = cint)
+            return binop(ast, symbols, builder, target_type, cint = cint)           
+            
 
         if name == c.assign:
             var_name = ast["var"]
@@ -683,7 +692,7 @@ def to_ir_type(_type):
 
 def overflows(ast, builder):
     overf = {"exp":
-                 {"value": "Error: cint value overflowed", "name": "slit"}
+                 {"value": "Error: Int value overflowed", "name": "slit"}
              }
     printStmt(overf, builder, None)
 
