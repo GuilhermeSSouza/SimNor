@@ -91,7 +91,7 @@ if __name__== "__main__":
 
 def executa(code, wholexer):
   
-  print(wholexer)
+  #print(wholexer)
   ast = None
   erro = None
 

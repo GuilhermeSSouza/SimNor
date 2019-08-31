@@ -262,8 +262,10 @@ def print_numbers(ir_object, builder):
 
 #printf
 def printStmt(ast, builder, symbols):
+
     #adapted from tutorial https://github.com/cea-sec/miasm/blob/master/miasm2/jitter/llvmconvert.py
     #but I know how it works and can explain it
+
     s = expression(ast["exp"], symbols, builder)
     if not isinstance(s, str):
         return print_numbers(s, builder)
@@ -311,25 +313,28 @@ def whileStmt(ast, builder, symbols):
 
 
 def ifStmt(ast, builder, symbols):
+
     cond = expression(ast["cond"], symbols, builder)
+    #print(cond)
     returned = False
     entry = builder.block
     if "else_stmt" in ast:
         with builder.if_else(cond) as (then, otherwise):
             with then:
                 returned_then = stmt(ast["stmt"], builder, symbols)
+                #print(returned_then)
             with otherwise:
                 returned_else = stmt(ast["else_stmt"], builder, symbols)
         returned = returned_then and returned_else
 
     else:
-        with builder.if_then(cond):
+        with builder.if_then(cond):            
             stmt(ast["stmt"], builder, symbols)
     if returned:
         endif = builder.block
         builder.function.blocks.remove(endif)
 
-    print(returned)
+   # print(returned)
     return returned
 
 
@@ -414,10 +419,6 @@ def binop(ast, symbols, builder, target_type, cint = False):
     rhs = expression(ast["rhs"], symbols, builder, cint = cint)  ###
     lhs = extract_value(lhs, builder)
     rhs = extract_value(rhs, builder)
-
-    print(lhs)
-    print(rhs)
-
     exp_type = target_type
     op = ast["op"]
 
@@ -461,7 +462,29 @@ def binop(ast, symbols, builder, target_type, cint = False):
             elif op == 'add':
                 return builder.add(lhs, rhs, name="add")
             elif op == 'sub':
-                return builder.sub(lhs, rhs, name = 'sub')
+
+
+                # Adapted from tutorial https://gist.github.com/sklam/eb89eab5b5708f03d0b971136a9806f4
+                # Andhttps://ian-bertolacci.github.io/llvm/llvmlite/python/compilers/programming/2016/03/06/LLVMLite_fibonacci.html
+                
+
+                cond = builder.icmp_signed('<', lhs, rhs)
+                #print (cond)
+                with builder.if_else(cond) as (then, otherwise):
+                    with then:
+                        bb_then = builder.basic_block
+                        out_then = builder.sub(lhs, lhs, name = 'out_then')
+                    with otherwise:
+                        bb_otherwise = builder.basic_block
+                        out_otherwise = builder.sub(lhs,rhs, name = 'out_otherwise')
+                
+                endif = builder.block
+                out_phi = builder.phi(i32)
+                out_phi.add_incoming(out_then, bb_then)
+                out_phi.add_incoming(out_otherwise, bb_otherwise)
+
+                return out_phi
+                #return builder.sub(lhs, rhs, name = 'sub')
             elif op == 'eq':
                 return builder.icmp_signed('==', lhs, rhs, name="eq")
             elif op == 'lt':
@@ -584,7 +607,7 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
                 limit = 2147483647
                 if neg:
                     limit += 1
-                if ast['value'] > limit or ast['value'] <= i_1:
+                if ast['value'] > limit or ast['value'] <= -2147483647:
                     overflows(ast, builder)
                 if exception and ast['value'] == 2147483648:
                     raise Error2147483648
@@ -743,7 +766,7 @@ def define_built_ins(module, known_funcs):
 def mainFunc(ast, *args):
     module = ir.Module(name="prog")
     convert(ast, module, *args)
-    # print(module)
+    #print(module)
 
     
     return module

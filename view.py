@@ -148,7 +148,7 @@ def inputUse():
 
 
 def execultaSimuldor(code):
-	result = ' \n ********** SimNor ********** \n \n \n'  + 'Return main::   '+ str(main.executa(code, var.get()))
+	result = ' \n ************************************* SimNor ************************************* \n'  + '>>Return main::  '+ str(main.executa(code, var.get()))
 	label.insert("end-1c", result)
 
 

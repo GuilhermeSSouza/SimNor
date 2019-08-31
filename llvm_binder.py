@@ -92,6 +92,6 @@ def bind(module, *args, optimize = False):
 
     # result = cfunc(*arg_values)
     result = cfunc()
-    print()
-    print("Programa main:: {}".format(result))
+    #print()
+    #print("Programa main:: {}".format(result))
     return [llvm_ir_parsed, result] 
