@@ -70,6 +70,7 @@ def func_order(ast, errorList, k_functions):
 
     # counts the number of run functions
     if count_run != 1:
+        print(count_run)
         errorList.append("Erro: All programs must define exactly one function named 'main'")
 
     ast['funcList'] = k_functions

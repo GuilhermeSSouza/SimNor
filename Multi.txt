@@ -1,0 +1,25 @@
+def int fun(int R_a, int R_b){
+
+while(R_b !=0){
+
+R_b = R_b-1;
+R_a = R_a +1;
+
+}
+
+return R_a;
+}
+
+#R_a = 5, logo so somaremos mais 2 vezes, assim, R_b =2
+#Podiamos fazer R_a =0, e assim, R_b = 3
+
+def int main(){
+int R_a = 5;
+int R_b = 2;
+while(R_b != 0){
+R_a = fun(R_a, 5);
+R_b = R_b - 1;
+}
+
+return R_a;
+}

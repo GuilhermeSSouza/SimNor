@@ -35,8 +35,8 @@ tokens = [
 
    'Equality',
    'Different',
-   'lessThan',
-   'greaterThan',
+   #'lessThan',
+   #'greaterThan',
    #'qualLess',
    #'EqualGreat',
    #'logicalOr',
@@ -312,9 +312,7 @@ def p_binop(p):
            | exp Minus exp
            | var Equal exp
            | exp Equality exp
-           | exp Different exp
-           | exp lessThan exp
-           | exp greaterThan exp'''
+           | exp Different exp'''
   if p[2] == '*':
     p[0] = {"name": binop, "lhs": p[1], "op": 'mul', "rhs": p[3]}
   elif p[2] == '/':
@@ -329,10 +327,10 @@ def p_binop(p):
     p[0] = {"name": binop, "lhs": p[1], "op": 'eq', "rhs": p[3]}
   elif p[2] == '!=':
     p[0] = {"name": binop, "lhs": p[1], "op": 'df', "rhs": p[3]}
-  elif p[2] == '<':
-    p[0] = {"name": binop, "lhs": p[1], "op": 'lt', "rhs": p[3]}
-  elif p[2] == '>':
-   p[0] = {"name": binop, "lhs": p[1], "op": 'gt', "rhs": p[3]}
+ # elif p[2] == '<':
+   # p[0] = {"name": binop, "lhs": p[1], "op": 'lt', "rhs": p[3]}
+ # elif p[2] == '>':
+  # p[0] = {"name": binop, "lhs": p[1], "op": 'gt', "rhs": p[3]}
   #elif p[2] == '<=':
    # p[0] = {"name": binop, "lhs": p[1], "op": 'el', "rhs": p[3]}
   #elif p[2] == '>=':
@@ -395,7 +393,7 @@ precedence = (
   #('left', 'logicalOr'),
   #('left', 'logicalAnd'),
   ('left', 'Equality', 'Different'),
-  ('left', 'lessThan', 'greaterThan'),
+  #('left', 'lessThan', 'greaterThan'),
   ('left', 'PLUS', 'Minus'),
   ('left','Multiply','Divide'),
   #('left','UOP'),
@@ -405,13 +403,13 @@ precedence = (
 #Sobrescrever yyerror do yacc (a fim de especializar  os erros do parser além - reiliciar ou descartar elementos após erros)
 def p_error(p):
   if p:
-    erro.append("Erro de sintaxe no token (ou no token anterior):   " + p.value + '\n Na linha :   '+str(p.lineno) )
+    erro.append("Erro de sintaxe no token (ou no token anterior):   " + p.value)
     #p.lineno = 0
-    print("Erro de sintaxe no token (ou no token anterior):  " + p.value  + str(p.lineno) )
+    #print("Erro de sintaxe no token (ou no token anterior):  " + p.value  + str(p.lineno) )
     
   else:
     erro.append('Erro de sintaxe no EOF')
-    print('Erro de sintaxe no EOF')
+    #print('Erro de sintaxe no EOF')
 
 ############# helper ############
 

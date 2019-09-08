@@ -12,10 +12,11 @@ llvm.initialize_native_asmprinter()
 
 i32 = ir.IntType(32)
 i1 = ir.IntType(1)
-i_1 = ir.Constant(i32, -1)
-i_0 = ir.Constant(i32, 0)
 f32 = ir.FloatType()
 
+
+#Get type int or void for functions or variables reference
+#Ref Type, is referece memory location (no copy refrence), this is true real obeject memory
 
 def ir_type(string):
     if "ref" in string:
@@ -30,6 +31,9 @@ def ir_type(string):
      #   return f32
     return ir.VoidType()
 
+
+
+#Exetern func refence for callfunc in code 
 
 def externs(extern, module, *sysArgs):
     returnType = ir_type(extern["ret_type"])
@@ -120,6 +124,9 @@ def getArgf(module, sysArgs):
 
     address = builder.gep(ptr, [int_0,value])
     builder.ret(builder.load(address))
+
+
+#Func convert the fucntion in the code in IR code for compile
 
 
 def funcs(ast, module, known_funcs):
@@ -620,7 +627,7 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
         if name == c.varExp:
             id = ast[c.var]
             try:
-                # return builder.load(symbols[id])
+                
                 return symbols[id]
             except TypeError as err:
                 raise RuntimeError('Error parsing: ' + str(ast), err)
@@ -735,19 +742,17 @@ def convert_funcs(ast, module, known_funcs):
 
 def convert(ast, module, *sysArgs):
     if "externs" in ast:
-    #     # does all the extern functions
+    
         convert_externs(ast["externs"], module, *sysArgs)
-    # moved funcs and externs into separate functions so that known_funcs could be passed from the prog level to funcs
     known_funcs = ast['funcList']
 
     define_built_ins(module, known_funcs)
 
     convert_funcs(ast["funcs"], module, known_funcs)
 
-    #########
-    #### make printf function
-    ####code from  https://github.com/cea-sec/miasm/blob/master/miasm2/jitter/llvmconvert.py
-    #### search for printf to find it easier
+        
+    # Code from  https://github.com/cea-sec/miasm/blob/master/miasm2/jitter/llvmconvert.py
+    # search for printf to find it easier
 
 
 def define_built_ins(module, known_funcs):

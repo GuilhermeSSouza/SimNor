@@ -33,7 +33,7 @@ def emit_ir(fileName, module):
 
 if __name__== "__main__":
   parser = argparse.ArgumentParser(
-    description='Sarah and Hao\' Compiler')
+    description='Simulador Máquina Norma\' Compiler')
   parser.add_argument('input_file', metavar='input_file',
                     help='input file name')
   parser.add_argument('-emit-ast', action='store_true',
@@ -105,6 +105,7 @@ def executa(code, wholexer):
 
 
   errors = analyzer.semanticsCheck(ast)
+  print(errors)
 
   if not errors:  
     module = IR.mainFunc(ast, '*')

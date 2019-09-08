@@ -6,6 +6,7 @@ from tkinter.ttk import*
 from time import strftime
 from PIL import Image, ImageTk
 import main
+import webbrowser
 
 
 HEIGHT = 768
@@ -51,8 +52,12 @@ varDebug.set(False)
 
 
 def getRadio():
-	selection = '\n  O simulador está usando as Regras Lógicas:  ' + str(var.get() )
-	label.insert("end-1c", selection)
+	selection = '\n  O simulador está usando as Regras Lógicas:  '
+	if var.get() == 1: 
+		selection += ' Básicas.'
+	else: 
+		selection += ' Avançadas.'
+		label.insert("end-1c", selection)
 
 
 
@@ -87,11 +92,11 @@ def saveArquivo():
 
 
 def lerRegraB():
-	info = 'Regras Basicas. \n\n\n  O simulador trabalha com dois conjuntos de regras lógicas! \n\n As Regras Básicas e  Regras Avançadas!. \n\n\n Dentro do conjunto de regras basicas tem-se os operadores codicionais \n \n "== " Que verifica a igualdade entre dois elementos retornado True ou False. \n \n" != "Que verifica se dois elementos são diferentes, retornado True ou False.\n\n\n OBS: Somente é possivel usar == ou != em conjunto com if (a==b) ou while(a != 0), \n as funções não retornam valores que não sejam INT ou VOID'
+	info = 'Regras Basicas. \n\n\n  O simulador trabalha com dois conjuntos de regras lógicas! \n\n As Regras Básicas e  Regras Avançadas!. \n\n\n Dentro do conjunto de regras basicas tem-se os operadores codicionais \n \n "== " Que verifica a igualdade entre dois elementos retornado True ou False. \n \n" != "Que verifica se dois elementos são diferentes, retornado True ou False.\n\n\n OBS: Somente é possivel usar == ou != em conjunto com if (a==b) ou while(a != 0).'
 	popupmsg_regras(info)
 
 def lerRegraA():
-	info = 'Regras Avançadas. \n\n\n  O simulador trabalha com dois conjuntos de regras lógicas! \n\n As Regras Básicas e as Regras Avançadas!. \n\n\n Dentro do conjunto de regras avançados tem-se os operadores codicionais \n \n "== " Que verifica a igualdade entre dois elementos retornado True ou False. \n \n" != "Que verifica se dois elementos são diferentes, retornado True ou False. \n\n "<"  \n\n ">" \n\n "<=" \n\n ">=" \n\n\n OBS: Somente é possivel usar == , !=  <, >, <= ou >= em conjunto com if (a==b) ou while(a != 0), \n as funções não retornam valores que não sejam INT ou VOID'
+	info = 'Regras Avançadas. \n\n\n  O simulador trabalha com dois conjuntos de regras lógicas!\n\n As Regras Básicas e as Regras Avançadas!. \n\n\n Dentro do conjunto de regras avançados tem-se os operadores codicionais \n \n "== " Que verifica a igualdade entre dois elementos retornado True ou False. \n \n" != "Que verifica se dois elementos são diferentes, retornado True ou False. \n\n "<" Que verifica se  a é menor que b, "a < b", retornado True ou False. \n\n ">" Que verifica se "a" é maior que "b", isto é, "a > b", retornado True ou False. \n\n "<=" Que verifica se "a" é menor igual que "b", isto é " a <= b " retornado True ou False. \n\n ">=" Que verifica se "a" é maior ou igual a "b", isto é " a >= b ", retornado True ou False. \n\n OBS: Somente é possivel usar == , !=  <, >, <= ou >= em conjunto com if (a==b) ou while(a != 0).\n\n'
 	popupmsg_regras(info)
 
 
@@ -205,10 +210,10 @@ regra.add_command(label = 'R. Básicas', font = NORM_FONT, command = lambda: ler
 
 help_ = tk.Menu(menubar, tearoff = 0)
 menubar.add_cascade(label = 'Help', font = NORM_FONT,  menu = help_)
-help_.add_command(label = 'Sintax', font = NORM_FONT,  command = None)
-help_.add_command(label = 'Exemplos', font = NORM_FONT, command = None)
+help_.add_command(label = 'Sintaxe', font = NORM_FONT,  command = lambda: webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/wiki/Sintaxe---SIMNOR'))
+help_.add_command(label = 'Exemplos', font = NORM_FONT, command = lambda : webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/wiki/Exemplos'))
 help_.add_separator()
-help_.add_command(label = 'Issues/Git', command = None)
+help_.add_command(label = 'Issues/Git', command = lambda : webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/issues'))
 
 
 

@@ -1,0 +1,8 @@
+def int main(){
+int R_a = 0;
+
+R_a = R_a +3;
+
+return R_a;
+
+}

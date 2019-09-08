@@ -23,8 +23,7 @@ def bind(module, *args, optimize = False):
 
     llvm_ir_parsed = llvm.parse_assembly(str(module))
     if False:
-        #general way of optimizing
-        # print("from optimize")
+        
         pmb = llvm.create_pass_manager_builder()
         pmb.opt_level = 3
 
@@ -34,12 +33,10 @@ def bind(module, *args, optimize = False):
         pm = llvm.create_module_pass_manager()
         pmb.populate(pm)
         a = pm.run(llvm_ir_parsed)
-        # print(f'something was optimized {a}')
+        
 
-
-    ####################################################################
+    
     if optimize:
-        #more specific way of optimizing 
         opt_manager = llvm.PassManagerBuilder()
         mod_manager = llvm.ModulePassManager()
 
@@ -72,25 +69,8 @@ def bind(module, *args, optimize = False):
 
     entry = engine.get_function_address("main")
 
-    # arg_types = []
-    # for arg in args:
-    #     if type(arg) == int:
-    #         arg_types.append(c_int)
-    #     elif type(arg) == float:
-    #         arg_types.append(c_float)
-    #
     cfunc = CFUNCTYPE(c_int)(entry)
-    # if len(arg_types) != 0:
-    #     cfunc = CFUNCTYPE(*arg_types)(entry)
-
-    # arg_values = []
-    # for arg in args:
-    #     if type(arg) == int:
-    #         arg_values.append(arg)
-    #     elif type(arg) == float:
-    #         arg_values.append(c_float(arg))
-
-    # result = cfunc(*arg_values)
+  
     result = cfunc()
     #print()
     #print("Programa main:: {}".format(result))
