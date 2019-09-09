@@ -8,15 +8,21 @@ Instalar o pip3 (preferencialmente o compativél com sua versão python) (Cuidad
 
 Na pasta dos arquivos fontes, execulte no terminal 
 
-$ pip3 freeze > requirements.txt
-$ pip3 install -r requirements.txt
+$ pip3 freeze > requirements.txt  
 
-$apt-get install python3-tk
-$pip3 install pyyaml
+$ pip3 install -r requirements.txt  
 
 
-Execulte o simulador:
-$ python3 view.py
+$apt-get install python3-tk  
+
+$pip3 install pyyaml  
+
+
+
+Execulte o simulador:  
+
+$ python3 view.py   
+
 
 
 Obs: O simulador encontra-se em desenvolvimentos.
