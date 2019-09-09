@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'rightEqualleftEqualityDifferentleftEqualGreatEqualLesslessThangreaterThanleftPLUSMinusleftMultiplyDivideCOMMA DEF Different Divide EXTERN Else Equal EqualGreat EqualLess Equality GLOBID If LBracket LParen Minus Multiply PLUS Print RBracket RParen Return Semicolon While greaterThan int lessThan lit noalias ref var voidprog : funcs\n          | externs funcsexterns : extern\n             | extern externsfuncs : func\n           | func funcsextern : EXTERN TYPE GLOBID LParen RParen Semicolonextern : EXTERN TYPE GLOBID LParen tdecls RParen Semicolonfunc : DEF TYPE GLOBID LParen RParen blkfunc : DEF TYPE GLOBID LParen vdecls RParen blkblk : LBracket stmts RBracketblk : LBracket RBracketstmts : stmt\n           | stmt stmtsstmt : blkstmt : Return Semicolon\n          | Return exp Semicolonstmt : vdecl Equal exp Semicolonstmt : exp Semicolonstmt : While LParen exp RParen stmtstmt : If LParen exp RParen stmt\n          | If LParen exp RParen stmt Else stmtstmt : Print exp Semicolon exps : exp\n           | exp COMMA expsexp : LParen exp RParenexp : litexp : binopexp : varexp : GLOBID expWrapperexpWrapper : LParen RParen\n                | LParen exps RParenbinop : exp Multiply exp\n           | exp PLUS exp\n           | exp Divide exp\n           | exp Minus exp\n           | var Equal exp\n           | exp Equality exp\n           | exp Different exp\n           | exp lessThan exp\n           | exp greaterThan exp\n           | exp EqualLess exp\n           | exp EqualGreat expvdecls : vdecl COMMA vdecls\n            | vdeclvdecl : TYPE vartdecls : TYPE\n            | TYPE COMMA tdeclsTYPE : int\n          | voidTYPE : ref TYPETYPE : noalias ref TYPE'
+_lr_signature = 'rightEqualleftEqualityDifferentleftPLUSMinusleftMultiplyDivideCOMMA DEF Different Divide EXTERN Else Equal Equality GLOBID If LBracket LParen Minus Multiply PLUS Print RBracket RParen Return Semicolon While int lit noalias ref var voidprog : funcs\n          | externs funcsexterns : extern\n             | extern externsfuncs : func\n           | func funcsextern : EXTERN TYPE GLOBID LParen RParen Semicolonextern : EXTERN TYPE GLOBID LParen tdecls RParen Semicolonfunc : DEF TYPE GLOBID LParen RParen blkfunc : DEF TYPE GLOBID LParen vdecls RParen blkblk : LBracket stmts RBracketblk : LBracket RBracketstmts : stmt\n           | stmt stmtsstmt : blkstmt : Return Semicolon\n          | Return exp Semicolonstmt : vdecl Equal exp Semicolonstmt : exp Semicolonstmt : While LParen exp RParen stmtstmt : If LParen exp RParen stmt\n          | If LParen exp RParen stmt Else stmtstmt : Print exp Semicolon exps : exp\n           | exp COMMA expsexp : LParen exp RParenexp : litexp : binopexp : varexp : GLOBID expWrapperexpWrapper : LParen RParen\n                | LParen exps RParenbinop : exp Multiply exp\n           | exp PLUS exp\n           | exp Divide exp\n           | exp Minus exp\n           | var Equal exp\n           | exp Equality exp\n           | exp Different expvdecls : vdecl COMMA vdecls\n            | vdeclvdecl : TYPE vartdecls : TYPE\n            | TYPE COMMA tdeclsTYPE : int\n          | voidTYPE : ref TYPETYPE : noalias ref TYPE'
     
-_lr_action_items = {'DEF':([0,3,4,5,10,32,37,40,54,57,58,],[6,6,6,-3,-4,-9,-7,-12,-10,-8,-11,]),'EXTERN':([0,5,37,57,],[7,7,-7,-8,]),'$end':([1,2,4,8,9,32,40,54,58,],[0,-1,-5,-2,-6,-9,-12,-10,-11,]),'int':([6,7,14,19,21,23,33,35,36,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[12,12,12,12,12,12,12,12,12,-12,12,-15,-11,-16,-19,-17,-23,-18,12,12,-20,-21,12,-22,]),'void':([6,7,14,19,21,23,33,35,36,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[13,13,13,13,13,13,13,13,13,-12,13,-15,-11,-16,-19,-17,-23,-18,13,13,-20,-21,13,-22,]),'ref':([6,7,14,15,19,21,23,33,35,36,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[14,14,14,19,14,14,14,14,14,14,-12,14,-15,-11,-16,-19,-17,-23,-18,14,14,-20,-21,14,-22,]),'noalias':([6,7,14,19,21,23,33,35,36,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[15,15,15,15,15,15,15,15,15,-12,15,-15,-11,-16,-19,-17,-23,-18,15,15,-20,-21,15,-22,]),'GLOBID':([11,12,13,16,18,22,33,40,41,42,43,47,49,58,60,62,63,64,65,66,67,68,69,70,71,72,73,74,76,78,80,81,96,101,102,103,105,106,107,109,110,],[17,-49,-50,20,-51,-52,53,-12,53,-15,53,53,53,-11,-16,-19,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,-17,-23,-18,53,53,53,-20,-21,53,-22,]),'var':([12,13,18,22,24,33,40,41,42,43,47,49,58,60,62,63,64,65,66,67,68,69,70,71,72,73,74,76,78,80,81,96,101,102,103,105,106,107,109,110,],[-49,-50,-51,-52,31,50,-12,50,-15,50,50,50,-11,-16,-19,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,-17,-23,-18,50,50,50,-20,-21,50,-22,]),'COMMA':([12,13,18,22,27,28,31,50,51,52,79,82,83,84,85,86,87,88,89,90,91,94,97,98,100,104,],[-49,-50,-51,-52,35,36,-46,-29,-27,-28,-30,-33,-34,-35,-36,-38,-39,-40,-41,-42,-43,-26,-37,-31,105,-32,]),'RParen':([12,13,18,21,22,23,26,27,28,30,31,50,51,52,55,56,75,79,80,82,83,84,85,86,87,88,89,90,91,93,94,95,97,98,99,100,104,108,],[-49,-50,-51,25,-52,29,34,-45,-47,38,-46,-29,-27,-28,-44,-48,94,-30,98,-33,-34,-35,-36,-38,-39,-40,-41,-42,-43,102,-26,103,-37,-31,104,-24,-32,-25,]),'LParen':([17,20,33,40,41,42,43,46,47,48,49,53,58,60,62,63,64,65,66,67,68,69,70,71,72,73,74,76,78,80,81,96,101,102,103,105,106,107,109,110,],[21,23,47,-12,47,-15,47,74,47,76,47,80,-11,-16,-19,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,-17,-23,-18,47,47,47,-20,-21,47,-22,]),'LBracket':([25,33,34,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[33,33,33,-12,33,-15,-11,-16,-19,-17,-23,-18,33,33,-20,-21,33,-22,]),'Semicolon':([29,38,43,44,50,51,52,61,77,79,82,83,84,85,86,87,88,89,90,91,92,94,97,98,104,],[37,57,60,62,-29,-27,-28,81,96,-30,-33,-34,-35,-36,-38,-39,-40,-41,-42,-43,101,-26,-37,-31,-32,]),'Equal':([31,45,50,],[-46,73,78,]),'RBracket':([33,39,40,41,42,58,59,60,62,81,96,101,106,107,110,],[40,58,-12,-13,-15,-11,-14,-16,-19,-17,-23,-18,-20,-21,-22,]),'Return':([33,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[43,-12,43,-15,-11,-16,-19,-17,-23,-18,43,43,-20,-21,43,-22,]),'While':([33,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[46,-12,46,-15,-11,-16,-19,-17,-23,-18,46,46,-20,-21,46,-22,]),'If':([33,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[48,-12,48,-15,-11,-16,-19,-17,-23,-18,48,48,-20,-21,48,-22,]),'Print':([33,40,41,42,58,60,62,81,96,101,102,103,106,107,109,110,],[49,-12,49,-15,-11,-16,-19,-17,-23,-18,49,49,-20,-21,49,-22,]),'lit':([33,40,41,42,43,47,49,58,60,62,63,64,65,66,67,68,69,70,71,72,73,74,76,78,80,81,96,101,102,103,105,106,107,109,110,],[51,-12,51,-15,51,51,51,-11,-16,-19,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,-17,-23,-18,51,51,51,-20,-21,51,-22,]),'Else':([40,42,58,60,62,81,96,101,106,107,110,],[-12,-15,-11,-16,-19,-17,-23,-18,-20,109,-22,]),'Multiply':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[63,-29,-27,-28,63,63,63,-30,-33,63,-35,63,63,63,63,63,63,63,63,63,-26,63,63,-31,63,-32,]),'PLUS':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[64,-29,-27,-28,64,64,64,-30,-33,-34,-35,-36,64,64,64,64,64,64,64,64,-26,64,64,-31,64,-32,]),'Divide':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[65,-29,-27,-28,65,65,65,-30,-33,65,-35,65,65,65,65,65,65,65,65,65,-26,65,65,-31,65,-32,]),'Minus':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[66,-29,-27,-28,66,66,66,-30,-33,-34,-35,-36,66,66,66,66,66,66,66,66,-26,66,66,-31,66,-32,]),'Equality':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[67,-29,-27,-28,67,67,67,-30,-33,-34,-35,-36,-38,-39,-40,-41,-42,-43,67,67,-26,67,67,-31,67,-32,]),'Different':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[68,-29,-27,-28,68,68,68,-30,-33,-34,-35,-36,-38,-39,-40,-41,-42,-43,68,68,-26,68,68,-31,68,-32,]),'lessThan':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[69,-29,-27,-28,69,69,69,-30,-33,-34,-35,-36,69,69,-40,-41,-42,-43,69,69,-26,69,69,-31,69,-32,]),'greaterThan':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[70,-29,-27,-28,70,70,70,-30,-33,-34,-35,-36,70,70,-40,-41,-42,-43,70,70,-26,70,70,-31,70,-32,]),'EqualLess':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[71,-29,-27,-28,71,71,71,-30,-33,-34,-35,-36,71,71,-40,-41,-42,-43,71,71,-26,71,71,-31,71,-32,]),'EqualGreat':([44,50,51,52,61,75,77,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,100,104,],[72,-29,-27,-28,72,72,72,-30,-33,-34,-35,-36,72,72,-40,-41,-42,-43,72,72,-26,72,72,-31,72,-32,]),}
+_lr_action_items = {'DEF':([0,3,4,5,10,32,37,40,54,57,58,],[6,6,6,-3,-4,-9,-7,-12,-10,-8,-11,]),'EXTERN':([0,5,37,57,],[7,7,-7,-8,]),'$end':([1,2,4,8,9,32,40,54,58,],[0,-1,-5,-2,-6,-9,-12,-10,-11,]),'int':([6,7,14,19,21,23,33,35,36,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[12,12,12,12,12,12,12,12,12,-12,12,-15,-11,-16,-19,-17,-23,-18,12,12,-20,-21,12,-22,]),'void':([6,7,14,19,21,23,33,35,36,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[13,13,13,13,13,13,13,13,13,-12,13,-15,-11,-16,-19,-17,-23,-18,13,13,-20,-21,13,-22,]),'ref':([6,7,14,15,19,21,23,33,35,36,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[14,14,14,19,14,14,14,14,14,14,-12,14,-15,-11,-16,-19,-17,-23,-18,14,14,-20,-21,14,-22,]),'noalias':([6,7,14,19,21,23,33,35,36,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[15,15,15,15,15,15,15,15,15,-12,15,-15,-11,-16,-19,-17,-23,-18,15,15,-20,-21,15,-22,]),'GLOBID':([11,12,13,16,18,22,33,40,41,42,43,47,49,58,60,62,63,64,65,66,67,68,69,70,72,74,76,77,88,93,94,95,97,98,99,101,102,],[17,-45,-46,20,-47,-48,53,-12,53,-15,53,53,53,-11,-16,-19,53,53,53,53,53,53,53,53,53,53,53,-17,-23,-18,53,53,53,-20,-21,53,-22,]),'var':([12,13,18,22,24,33,40,41,42,43,47,49,58,60,62,63,64,65,66,67,68,69,70,72,74,76,77,88,93,94,95,97,98,99,101,102,],[-45,-46,-47,-48,31,50,-12,50,-15,50,50,50,-11,-16,-19,50,50,50,50,50,50,50,50,50,50,50,-17,-23,-18,50,50,50,-20,-21,50,-22,]),'COMMA':([12,13,18,22,27,28,31,50,51,52,75,78,79,80,81,82,83,86,89,90,92,96,],[-45,-46,-47,-48,35,36,-42,-29,-27,-28,-30,-33,-34,-35,-36,-38,-39,-26,-37,-31,97,-32,]),'RParen':([12,13,18,21,22,23,26,27,28,30,31,50,51,52,55,56,71,75,76,78,79,80,81,82,83,85,86,87,89,90,91,92,96,100,],[-45,-46,-47,25,-48,29,34,-41,-43,38,-42,-29,-27,-28,-40,-44,86,-30,90,-33,-34,-35,-36,-38,-39,94,-26,95,-37,-31,96,-24,-32,-25,]),'LParen':([17,20,33,40,41,42,43,46,47,48,49,53,58,60,62,63,64,65,66,67,68,69,70,72,74,76,77,88,93,94,95,97,98,99,101,102,],[21,23,47,-12,47,-15,47,70,47,72,47,76,-11,-16,-19,47,47,47,47,47,47,47,47,47,47,47,-17,-23,-18,47,47,47,-20,-21,47,-22,]),'LBracket':([25,33,34,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[33,33,33,-12,33,-15,-11,-16,-19,-17,-23,-18,33,33,-20,-21,33,-22,]),'Semicolon':([29,38,43,44,50,51,52,61,73,75,78,79,80,81,82,83,84,86,89,90,96,],[37,57,60,62,-29,-27,-28,77,88,-30,-33,-34,-35,-36,-38,-39,93,-26,-37,-31,-32,]),'Equal':([31,45,50,],[-42,69,74,]),'RBracket':([33,39,40,41,42,58,59,60,62,77,88,93,98,99,102,],[40,58,-12,-13,-15,-11,-14,-16,-19,-17,-23,-18,-20,-21,-22,]),'Return':([33,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[43,-12,43,-15,-11,-16,-19,-17,-23,-18,43,43,-20,-21,43,-22,]),'While':([33,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[46,-12,46,-15,-11,-16,-19,-17,-23,-18,46,46,-20,-21,46,-22,]),'If':([33,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[48,-12,48,-15,-11,-16,-19,-17,-23,-18,48,48,-20,-21,48,-22,]),'Print':([33,40,41,42,58,60,62,77,88,93,94,95,98,99,101,102,],[49,-12,49,-15,-11,-16,-19,-17,-23,-18,49,49,-20,-21,49,-22,]),'lit':([33,40,41,42,43,47,49,58,60,62,63,64,65,66,67,68,69,70,72,74,76,77,88,93,94,95,97,98,99,101,102,],[51,-12,51,-15,51,51,51,-11,-16,-19,51,51,51,51,51,51,51,51,51,51,51,-17,-23,-18,51,51,51,-20,-21,51,-22,]),'Else':([40,42,58,60,62,77,88,93,98,99,102,],[-12,-15,-11,-16,-19,-17,-23,-18,-20,101,-22,]),'Multiply':([44,50,51,52,61,71,73,75,78,79,80,81,82,83,84,85,86,87,89,90,92,96,],[63,-29,-27,-28,63,63,63,-30,-33,63,-35,63,63,63,63,63,-26,63,63,-31,63,-32,]),'PLUS':([44,50,51,52,61,71,73,75,78,79,80,81,82,83,84,85,86,87,89,90,92,96,],[64,-29,-27,-28,64,64,64,-30,-33,-34,-35,-36,64,64,64,64,-26,64,64,-31,64,-32,]),'Divide':([44,50,51,52,61,71,73,75,78,79,80,81,82,83,84,85,86,87,89,90,92,96,],[65,-29,-27,-28,65,65,65,-30,-33,65,-35,65,65,65,65,65,-26,65,65,-31,65,-32,]),'Minus':([44,50,51,52,61,71,73,75,78,79,80,81,82,83,84,85,86,87,89,90,92,96,],[66,-29,-27,-28,66,66,66,-30,-33,-34,-35,-36,66,66,66,66,-26,66,66,-31,66,-32,]),'Equality':([44,50,51,52,61,71,73,75,78,79,80,81,82,83,84,85,86,87,89,90,92,96,],[67,-29,-27,-28,67,67,67,-30,-33,-34,-35,-36,-38,-39,67,67,-26,67,67,-31,67,-32,]),'Different':([44,50,51,52,61,71,73,75,78,79,80,81,82,83,84,85,86,87,89,90,92,96,],[68,-29,-27,-28,68,68,68,-30,-33,-34,-35,-36,-38,-39,68,68,-26,68,68,-31,68,-32,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'prog':([0,],[1,]),'funcs':([0,3,4,],[2,8,9,]),'externs':([0,5,],[3,10,]),'func':([0,3,4,],[4,4,4,]),'extern':([0,5,],[5,5,]),'TYPE':([6,7,14,19,21,23,33,35,36,41,102,103,109,],[11,16,18,22,24,28,24,24,28,24,24,24,24,]),'vdecls':([21,35,],[26,55,]),'vdecl':([21,33,35,41,102,103,109,],[27,45,27,45,45,45,45,]),'tdecls':([23,36,],[30,56,]),'blk':([25,33,34,41,102,103,109,],[32,42,54,42,42,42,42,]),'stmts':([33,41,],[39,59,]),'stmt':([33,41,102,103,109,],[41,41,106,107,110,]),'exp':([33,41,43,47,49,63,64,65,66,67,68,69,70,71,72,73,74,76,78,80,102,103,105,109,],[44,44,61,75,77,82,83,84,85,86,87,88,89,90,91,92,93,95,97,100,44,44,100,44,]),'binop':([33,41,43,47,49,63,64,65,66,67,68,69,70,71,72,73,74,76,78,80,102,103,105,109,],[52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,]),'expWrapper':([53,],[79,]),'exps':([80,105,],[99,108,]),}
+_lr_goto_items = {'prog':([0,],[1,]),'funcs':([0,3,4,],[2,8,9,]),'externs':([0,5,],[3,10,]),'func':([0,3,4,],[4,4,4,]),'extern':([0,5,],[5,5,]),'TYPE':([6,7,14,19,21,23,33,35,36,41,94,95,101,],[11,16,18,22,24,28,24,24,28,24,24,24,24,]),'vdecls':([21,35,],[26,55,]),'vdecl':([21,33,35,41,94,95,101,],[27,45,27,45,45,45,45,]),'tdecls':([23,36,],[30,56,]),'blk':([25,33,34,41,94,95,101,],[32,42,54,42,42,42,42,]),'stmts':([33,41,],[39,59,]),'stmt':([33,41,94,95,101,],[41,41,98,99,102,]),'exp':([33,41,43,47,49,63,64,65,66,67,68,69,70,72,74,76,94,95,97,101,],[44,44,61,71,73,78,79,80,81,82,83,84,85,87,89,92,44,44,92,44,]),'binop':([33,41,43,47,49,63,64,65,66,67,68,69,70,72,74,76,94,95,97,101,],[52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,]),'expWrapper':([53,],[75,]),'exps':([76,97,],[91,100,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,56 +27,52 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> prog","S'",1,None,None,None),
-  ('prog -> funcs','prog',1,'p_prog','lexerAndParserL.py',154),
-  ('prog -> externs funcs','prog',2,'p_prog','lexerAndParserL.py',155),
-  ('externs -> extern','externs',1,'p_externs','lexerAndParserL.py',162),
-  ('externs -> extern externs','externs',2,'p_externs','lexerAndParserL.py',163),
-  ('funcs -> func','funcs',1,'p_funcs','lexerAndParserL.py',171),
-  ('funcs -> func funcs','funcs',2,'p_funcs','lexerAndParserL.py',172),
-  ('extern -> EXTERN TYPE GLOBID LParen RParen Semicolon','extern',6,'p_extern','lexerAndParserL.py',181),
-  ('extern -> EXTERN TYPE GLOBID LParen tdecls RParen Semicolon','extern',7,'p_externWithTypes','lexerAndParserL.py',185),
-  ('func -> DEF TYPE GLOBID LParen RParen blk','func',6,'p_func','lexerAndParserL.py',190),
-  ('func -> DEF TYPE GLOBID LParen vdecls RParen blk','func',7,'p_funcWithParams','lexerAndParserL.py',194),
-  ('blk -> LBracket stmts RBracket','blk',3,'p_blk','lexerAndParserL.py',199),
-  ('blk -> LBracket RBracket','blk',2,'p_blkEmpty','lexerAndParserL.py',203),
-  ('stmts -> stmt','stmts',1,'p_statements','lexerAndParserL.py',208),
-  ('stmts -> stmt stmts','stmts',2,'p_statements','lexerAndParserL.py',209),
-  ('stmt -> blk','stmt',1,'p_blkStmt','lexerAndParserL.py',218),
-  ('stmt -> Return Semicolon','stmt',2,'p_return','lexerAndParserL.py',222),
-  ('stmt -> Return exp Semicolon','stmt',3,'p_return','lexerAndParserL.py',223),
-  ('stmt -> vdecl Equal exp Semicolon','stmt',4,'p_vdeclStmt','lexerAndParserL.py',231),
-  ('stmt -> exp Semicolon','stmt',2,'p_expSemi','lexerAndParserL.py',243),
-  ('stmt -> While LParen exp RParen stmt','stmt',5,'p_while','lexerAndParserL.py',247),
-  ('stmt -> If LParen exp RParen stmt','stmt',5,'p_if','lexerAndParserL.py',251),
-  ('stmt -> If LParen exp RParen stmt Else stmt','stmt',7,'p_if','lexerAndParserL.py',252),
-  ('stmt -> Print exp Semicolon','stmt',3,'p_print','lexerAndParserL.py',259),
-  ('exps -> exp','exps',1,'p_exps','lexerAndParserL.py',264),
-  ('exps -> exp COMMA exps','exps',3,'p_exps','lexerAndParserL.py',265),
-  ('exp -> LParen exp RParen','exp',3,'p_expParen','lexerAndParserL.py',273),
-  ('exp -> lit','exp',1,'p_exp','lexerAndParserL.py',277),
-  ('exp -> binop','exp',1,'p_expBinOpUop','lexerAndParserL.py',288),
-  ('exp -> var','exp',1,'p_var','lexerAndParserL.py',292),
-  ('exp -> GLOBID expWrapper','exp',2,'p_expGlobid','lexerAndParserL.py',296),
-  ('expWrapper -> LParen RParen','expWrapper',2,'p_expWrapper','lexerAndParserL.py',300),
-  ('expWrapper -> LParen exps RParen','expWrapper',3,'p_expWrapper','lexerAndParserL.py',301),
-  ('binop -> exp Multiply exp','binop',3,'p_binop','lexerAndParserL.py',309),
-  ('binop -> exp PLUS exp','binop',3,'p_binop','lexerAndParserL.py',310),
-  ('binop -> exp Divide exp','binop',3,'p_binop','lexerAndParserL.py',311),
-  ('binop -> exp Minus exp','binop',3,'p_binop','lexerAndParserL.py',312),
-  ('binop -> var Equal exp','binop',3,'p_binop','lexerAndParserL.py',313),
-  ('binop -> exp Equality exp','binop',3,'p_binop','lexerAndParserL.py',314),
-  ('binop -> exp Different exp','binop',3,'p_binop','lexerAndParserL.py',315),
-  ('binop -> exp lessThan exp','binop',3,'p_binop','lexerAndParserL.py',316),
-  ('binop -> exp greaterThan exp','binop',3,'p_binop','lexerAndParserL.py',317),
-  ('binop -> exp EqualLess exp','binop',3,'p_binop','lexerAndParserL.py',318),
-  ('binop -> exp EqualGreat exp','binop',3,'p_binop','lexerAndParserL.py',319),
-  ('vdecls -> vdecl COMMA vdecls','vdecls',3,'p_vdecls','lexerAndParserL.py',358),
-  ('vdecls -> vdecl','vdecls',1,'p_vdecls','lexerAndParserL.py',359),
-  ('vdecl -> TYPE var','vdecl',2,'p_vdeclare','lexerAndParserL.py',367),
-  ('tdecls -> TYPE','tdecls',1,'p_tdecls','lexerAndParserL.py',372),
-  ('tdecls -> TYPE COMMA tdecls','tdecls',3,'p_tdecls','lexerAndParserL.py',373),
-  ('TYPE -> int','TYPE',1,'p_type','lexerAndParserL.py',381),
-  ('TYPE -> void','TYPE',1,'p_type','lexerAndParserL.py',382),
-  ('TYPE -> ref TYPE','TYPE',2,'p_refType','lexerAndParserL.py',386),
-  ('TYPE -> noalias ref TYPE','TYPE',3,'p_refTypeNoAlias','lexerAndParserL.py',391),
+  ('prog -> funcs','prog',1,'p_prog','lexerAndParser.py',154),
+  ('prog -> externs funcs','prog',2,'p_prog','lexerAndParser.py',155),
+  ('externs -> extern','externs',1,'p_externs','lexerAndParser.py',162),
+  ('externs -> extern externs','externs',2,'p_externs','lexerAndParser.py',163),
+  ('funcs -> func','funcs',1,'p_funcs','lexerAndParser.py',171),
+  ('funcs -> func funcs','funcs',2,'p_funcs','lexerAndParser.py',172),
+  ('extern -> EXTERN TYPE GLOBID LParen RParen Semicolon','extern',6,'p_extern','lexerAndParser.py',181),
+  ('extern -> EXTERN TYPE GLOBID LParen tdecls RParen Semicolon','extern',7,'p_externWithTypes','lexerAndParser.py',185),
+  ('func -> DEF TYPE GLOBID LParen RParen blk','func',6,'p_func','lexerAndParser.py',190),
+  ('func -> DEF TYPE GLOBID LParen vdecls RParen blk','func',7,'p_funcWithParams','lexerAndParser.py',194),
+  ('blk -> LBracket stmts RBracket','blk',3,'p_blk','lexerAndParser.py',199),
+  ('blk -> LBracket RBracket','blk',2,'p_blkEmpty','lexerAndParser.py',203),
+  ('stmts -> stmt','stmts',1,'p_statements','lexerAndParser.py',208),
+  ('stmts -> stmt stmts','stmts',2,'p_statements','lexerAndParser.py',209),
+  ('stmt -> blk','stmt',1,'p_blkStmt','lexerAndParser.py',218),
+  ('stmt -> Return Semicolon','stmt',2,'p_return','lexerAndParser.py',222),
+  ('stmt -> Return exp Semicolon','stmt',3,'p_return','lexerAndParser.py',223),
+  ('stmt -> vdecl Equal exp Semicolon','stmt',4,'p_vdeclStmt','lexerAndParser.py',231),
+  ('stmt -> exp Semicolon','stmt',2,'p_expSemi','lexerAndParser.py',243),
+  ('stmt -> While LParen exp RParen stmt','stmt',5,'p_while','lexerAndParser.py',247),
+  ('stmt -> If LParen exp RParen stmt','stmt',5,'p_if','lexerAndParser.py',251),
+  ('stmt -> If LParen exp RParen stmt Else stmt','stmt',7,'p_if','lexerAndParser.py',252),
+  ('stmt -> Print exp Semicolon','stmt',3,'p_print','lexerAndParser.py',259),
+  ('exps -> exp','exps',1,'p_exps','lexerAndParser.py',264),
+  ('exps -> exp COMMA exps','exps',3,'p_exps','lexerAndParser.py',265),
+  ('exp -> LParen exp RParen','exp',3,'p_expParen','lexerAndParser.py',273),
+  ('exp -> lit','exp',1,'p_exp','lexerAndParser.py',277),
+  ('exp -> binop','exp',1,'p_expBinOpUop','lexerAndParser.py',288),
+  ('exp -> var','exp',1,'p_var','lexerAndParser.py',292),
+  ('exp -> GLOBID expWrapper','exp',2,'p_expGlobid','lexerAndParser.py',296),
+  ('expWrapper -> LParen RParen','expWrapper',2,'p_expWrapper','lexerAndParser.py',300),
+  ('expWrapper -> LParen exps RParen','expWrapper',3,'p_expWrapper','lexerAndParser.py',301),
+  ('binop -> exp Multiply exp','binop',3,'p_binop','lexerAndParser.py',309),
+  ('binop -> exp PLUS exp','binop',3,'p_binop','lexerAndParser.py',310),
+  ('binop -> exp Divide exp','binop',3,'p_binop','lexerAndParser.py',311),
+  ('binop -> exp Minus exp','binop',3,'p_binop','lexerAndParser.py',312),
+  ('binop -> var Equal exp','binop',3,'p_binop','lexerAndParser.py',313),
+  ('binop -> exp Equality exp','binop',3,'p_binop','lexerAndParser.py',314),
+  ('binop -> exp Different exp','binop',3,'p_binop','lexerAndParser.py',315),
+  ('vdecls -> vdecl COMMA vdecls','vdecls',3,'p_vdecls','lexerAndParser.py',354),
+  ('vdecls -> vdecl','vdecls',1,'p_vdecls','lexerAndParser.py',355),
+  ('vdecl -> TYPE var','vdecl',2,'p_vdeclare','lexerAndParser.py',363),
+  ('tdecls -> TYPE','tdecls',1,'p_tdecls','lexerAndParser.py',368),
+  ('tdecls -> TYPE COMMA tdecls','tdecls',3,'p_tdecls','lexerAndParser.py',369),
+  ('TYPE -> int','TYPE',1,'p_type','lexerAndParser.py',377),
+  ('TYPE -> void','TYPE',1,'p_type','lexerAndParser.py',378),
+  ('TYPE -> ref TYPE','TYPE',2,'p_refType','lexerAndParser.py',382),
+  ('TYPE -> noalias ref TYPE','TYPE',3,'p_refTypeNoAlias','lexerAndParser.py',387),
 ]

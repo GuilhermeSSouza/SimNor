@@ -4,7 +4,7 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter.ttk import*
 from time import strftime
-from PIL import Image, ImageTk
+#from PIL import Image, ImageTk
 import main
 import webbrowser
 
@@ -17,7 +17,8 @@ NORM_FONT= ("Verdana", 10)
 root = tk.Tk()
 root.title("SimNor v:0.01")
 root.geometry('1366x768')
-
+ico = PhotoImage(file = 'post.png')
+root.tk.call('wm', 'iconphoto', root._w, ico)
 
 
 
@@ -57,7 +58,7 @@ def getRadio():
 		selection += ' Básicas.'
 	else: 
 		selection += ' Avançadas.'
-		label.insert("end-1c", selection)
+	label.insert("end-1c", selection)
 
 
 
@@ -217,6 +218,14 @@ help_.add_command(label = 'Issues/Git', command = lambda : webbrowser.open('http
 
 
 
+
+label2 = tk.Label(root, text = " CÓDIGO FONTE ", bg='#FDF5E9')
+label2.place(relx=0.40, rely=0.01)
+
+
+label2 = tk.Label(root, text = " RESULTADO MAIN", bg='#FDF5E9')
+label2.place(relx=0.40, rely=0.75)
+
 frame = tk.Frame(root, bg='#FDF5E9', bd=5)
 frame.place(relx=0.53, rely=0.03, relwidth=0.85, relheight=0.7, anchor='n')
 
@@ -281,7 +290,7 @@ label.place(relwidth=0.80, relheight=1)
 
 
 scrollBar = tk.Scrollbar(lower_frame)
-scrollBar.place(relx=0.8, rely = 0.01, relwidth=0.03)
+scrollBar.place(relx=0.81, rely = 0.01, relwidth=0.03)
 
 scrollBar.config(command=label.yview)
 label.config(yscrollcommand=scrollBar.set)
