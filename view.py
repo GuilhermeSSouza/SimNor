@@ -15,7 +15,7 @@ WIDTH = 1366
 NORM_FONT= ("Verdana", 10)
 
 root = tk.Tk()
-root.title("SimNor v:0.01")
+root.title("SimNor 1.0 - Em desenvolvimento")
 root.geometry('1366x768')
 ico = PhotoImage(file = 'post.png')
 root.tk.call('wm', 'iconphoto', root._w, ico)
@@ -219,7 +219,7 @@ help_.add_command(label = 'Issues/Git', command = lambda : webbrowser.open('http
 
 
 
-label2 = tk.Label(root, text = " CÓDIGO FONTE ", bg='#FDF5E9')
+label2 = tk.Label(root, text = " CÓDIGO-FONTE ", bg='#FDF5E9')
 label2.place(relx=0.40, rely=0.01)
 
 
