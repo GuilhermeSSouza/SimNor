@@ -656,7 +656,7 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
             var_name = ast["var"]
 
             if var_name not in symbols:
-                raise RuntimeError(f'{var_name} has not been defined')
+                raise RuntimeError(str(var_name)+'has not been defined')
 
             ptr = symbols[var_name]
             if var_name in symbols["cint"]:
