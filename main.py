@@ -105,7 +105,7 @@ def executa(code, wholexer):
 
 
   errors = analyzer.semanticsCheck(ast)
-  print(errors)
+  #print(errors)
 
   if not errors:  
     module = IR.mainFunc(ast, '*')

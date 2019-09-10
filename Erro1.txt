@@ -1,0 +1,43 @@
+#Arquivo para verificar erros  e Feedbacks (Alguns erros teram feedback apresentados em 
+#"RESULTADO MAIN")
+# Outros seram exibidos no terminal do SO - Erros mapeados, mas ainda não implementados uma forma de exibi-los ao usuario
+# Sempre que não exibir um feedback na interface do simulador - Consulte o terminal - E 
+#veja se o feedback do erro faz algum sentido em relação ao código executado.
+
+
+def int func (int R_a, int R_b){
+
+# Descomente a linha abaixo e execulte o simulador
+#int R_& = 0;
+
+
+
+# Descomente a linha abaixo e execulte o simulador
+#int R_a = 1;
+
+
+int R_a = 1;
+
+#Comente a linha abaixo
+return R_a;
+}
+
+def int main(){
+
+
+#Descomente a linha abaixo e execulte o simulador
+#int R_a = R_b;
+
+
+#Descomente a linha abaixo
+#int R_a = 100
+
+
+#Descomente a linha abaixo e execute o simulador
+#int R_a = -1;
+
+
+#Comente a linha abaixo e execute simulador
+return func(2,3);
+
+}
