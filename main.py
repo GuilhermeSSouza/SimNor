@@ -13,7 +13,7 @@ def readFile(fileName):
   mMap = mmap.mmap(f.fileno(),0, prot = mmap.PROT_READ)
   stringFile =str(mMap[:])
   stringFile = stringFile[2:-1]
-  data = mMap[:].decode('ascii')
+  data = mMap[:].decode('utf-8')
   return data
 
 def emitAst(fileName, output):
