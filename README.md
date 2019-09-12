@@ -10,7 +10,7 @@ Na pasta dos arquivos fontes, execulte no terminal
 
 $apt-get install python3-ply    
 
-$pip install llvmlite  
+$pip3 install llvmlite  
 
 $apt-get install python3-tk  
 
