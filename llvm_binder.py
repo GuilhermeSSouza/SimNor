@@ -1,8 +1,8 @@
 import llvmlite.binding as llvm
-from ctypes import CFUNCTYPE, c_int, c_float
+from ctypes import CFUNCTYPE, c_int, c_float, c_int64
 
 def inject_built_in(module):
-    built_in = 'define void @"printFloat"(float) #0 {  %2 = alloca float, align 4  store float %0, float* %2, align 4  %3 = load float, float* %2, align 4  %4 = fpext float %3 to double  %5 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i32 0, i32 0), double %4)  ret void}define void @"printInt"(i32) #0 {  %2 = alloca i32, align 4  store i32 %0, i32* %2, align 4  %3 = load i32, i32* %2, align 4  %4 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i32 0, i32 0), i32 %3)  ret void}define void @"printString"(i8*) #0 {  %2 = alloca i8*, align 8  store i8* %0, i8** %2, align 8  %3 = load i8*, i8** %2, align 8  %4 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.2, i32 0, i32 0), i8* %3)  ret void}'
+    built_in = 'define void @"printFloat"(float) #0 {  %2 = alloca float, align 4  store float %0, float* %2, align 4  %3 = load float, float* %2, align 4  %4 = fpext float %3 to double  %5 = call i64 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i63 0, i64 0), double %4)  ret void}define void @"printInt"(i64) #0 {  %2 = alloca i64, align 4  store i64 %0, i64* %2, align 4  %3 = load i64, i64* %2, align 4  %4 = call i64 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i64 0, i64 0), i64 %3)  ret void}define void @"printString"(i8*) #0 {  %2 = alloca i8*, align 8  store i8* %0, i8** %2, align 8  %3 = load i8*, i8** %2, align 8  %4 = call i64 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.2, i64 0, i64 0), i8* %3)  ret void}'
     string_declare = '''@.str = private unnamed_addr constant [4 x i8] c"%f\\0A\\00", align 1@.str.1 = private unnamed_addr constant [4 x i8] c"%d\\0A\\00", align 1@.str.2 = private unnamed_addr constant [4 x i8] c"%s\\0A\\00", align 1'''
     strings = break_run(str(module))
     return string_declare + strings[0] + built_in + strings[1]
@@ -10,10 +10,10 @@ def inject_built_in(module):
 
 def break_run(module_string):
     module_string = module_string.replace('declare void @"printFloat"(float %".1")', "")
-    module_string = module_string.replace('declare void @"printInt"(i32 %".1")', "")
+    module_string = module_string.replace('declare void @"printInt"(i64 %".1")', "")
     module_string = module_string.replace('declare void @"printString"(i8* %".1")', "")
 
-    index = module_string.index('define i32 @"main"()')
+    index = module_string.index('define i64 @"main"()')
     results = [module_string[0:index], module_string[index:]]
     return results
 
@@ -69,7 +69,7 @@ def bind(module, *args, optimize = False):
 
     entry = engine.get_function_address("main")
 
-    cfunc = CFUNCTYPE(c_int)(entry)
+    cfunc = CFUNCTYPE(c_int64)(entry)
   
     result = cfunc()
     #print()

@@ -183,7 +183,7 @@ menubar = tk.Menu(root)
 
 file = tk.Menu(menubar, tearoff = 0)
 menubar.add_cascade(label = 'File', menu = file, font = NORM_FONT)
-file.add_command(label = 'Clear', font = NORM_FONT, command = lambda: clearCode())
+file.add_command(label = 'New File', font = NORM_FONT, command = lambda: clearCode())
 file.add_command(label = 'Open',  font = NORM_FONT, command = lambda: openArquivo())
 file.add_command(label = 'Save',  font = NORM_FONT, command = lambda: saveArquivo())
 file.add_separator()

@@ -10,7 +10,7 @@ llvm.initialize()
 llvm.initialize_native_target()
 llvm.initialize_native_asmprinter()
 
-i32 = ir.IntType(32)
+i32 = ir.IntType(64)
 i1 = ir.IntType(1)
 f32 = ir.FloatType()
 
@@ -757,7 +757,7 @@ def convert(ast, module, *sysArgs):
 
 def define_built_ins(module, known_funcs):
     char_pointer = ir.IntType(8).as_pointer()
-    fnty = ir.FunctionType(ir.IntType(32), [char_pointer], var_arg=True)
+    fnty = ir.FunctionType(ir.IntType(64), [char_pointer], var_arg=True)
     printf = ir.Function(module, fnty, name="printf")
     known_funcs["printf"] = "slit"
     fnty = ir.FunctionType(ir.VoidType(), [char_pointer])
