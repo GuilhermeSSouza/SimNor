@@ -173,9 +173,9 @@ def recurs2(exp, knownVars, k_functions):
         for i in exp:
             recurs2(exp, knownVars, k_functions)
 
-    #if exp['name'] == 'slit':
-     #   exp['type'] = 'slit'
-      #  return 'slit'
+    if exp['name'] == 'slit':
+       exp['type'] = 'slit'
+       return 'slit'
 
     if 'assign' == exp['name']:
         t = recurs2(exp['exp'], knownVars, k_functions)

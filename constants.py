@@ -41,3 +41,4 @@ slitExp = "slit"
 funcCallExp = "funccall"
 binop = 'binop'
 cint_args= "def"
+inter = "int"

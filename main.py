@@ -103,6 +103,7 @@ def executa(code, wholexer):
   if ast is None:
     return 'AST parsing failure \n' + str(erro[-1]) 
 
+  #print(ast)
 
   errors = analyzer.semanticsCheck(ast)
   #print(errors)

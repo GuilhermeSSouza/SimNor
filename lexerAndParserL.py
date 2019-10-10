@@ -25,7 +25,7 @@ RESERVED = {
 
 tokens = [
    'lit',
-   #'slit',
+   'slit',
 
    'PLUS',
    'Minus',
@@ -50,7 +50,7 @@ tokens = [
    'COMMA',
 
    #'newline',
-   'var',
+   #'var',
    'GLOBID',
    #'Comment',
    'Semicolon'
@@ -88,10 +88,11 @@ t_Semicolon = r';'
 t_ignore  = ' \t'
 
 
-# def t_slit(t):
-#   r'"[^"]*"'
-#   t.value = t.value[1:-1]
-#   return t
+def t_slit(t):
+  r'"[^"]*"'
+  t.value = t.value[1:-1]
+  print(t)
+  return t
 
 
 ############## comment ##############
@@ -103,21 +104,21 @@ def t_Comment(t):
 ############## var ##############
 #Provisoriamente as varivéis tem que ser instanciada como R_a = nome
 
-def t_var(t):
-  r'[R][_][\s]*[a-zA-Z][a-zA-Z0-9]*'
-  t.value = t.value[2:].strip()
-  return t
+#def t_var(t):
+ # r'[R][_][\s]*[a-zA-Z][a-zA-Z0-9]*'
+  #t.value = t.value[2:].strip()
+  #return t
 
 ############## lit ##############
 # Check for reserved words
 def t_lit(t):
   r'\d+'
-  #t.value = t.value.replace(" ", "")
-  #if '.' in t.value:
-  # t.value = float(t.value)
-  #else:
-  t.value = int(t.value)
-  t.type = 'lit'
+  t.value = t.value.replace(" ", "")
+  if '.' in t.value:
+    t.value = int(t.value)
+  else:
+    t.value = int(t.value)
+    t.type = 'lit'
   return t
 
 ############## globid ##############
@@ -247,6 +248,11 @@ def p_while(p):
    '''stmt : While LParen exp RParen stmt'''
    p[0] = {name: whileStmt, cond: p[3], stmt: p[5]}
 
+def p_print(p):
+  '''stmt : Print exp Semicolon'''
+  p[0] = {name : printStmt, exp : p[2]}
+
+
 def p_if(p):
   '''stmt : If LParen exp RParen stmt
           | If LParen exp RParen stmt Else stmt'''
@@ -255,9 +261,6 @@ def p_if(p):
   else:
     p[0] = {name: ifStmt, cond: p[3], stmt: p[5], else_stmt: p[7]}
 
-def p_print(p):
-  '''stmt : Print exp Semicolon'''
-  p[0] = {name : printStmt, exp : p[2]}
 
 # ############## exps ##############
 def p_exps(p):
@@ -289,7 +292,7 @@ def p_expBinOpUop(p):
   p[0] = p[1]
 
 def p_var(p):
-  '''exp : var'''
+  '''exp : GLOBID'''
   p[0] = {name: varExp, var: p[1]}
 
 def p_expGlobid(p):
@@ -310,7 +313,7 @@ def p_binop(p):
            | exp PLUS exp
            | exp Divide exp
            | exp Minus exp
-           | var Equal exp
+           | GLOBID Equal exp
            | exp Equality exp
            | exp Different exp
            | exp lessThan exp
@@ -370,8 +373,9 @@ def p_vdecls(p):
     p[0] = {name: vdecls, vars_: [p[1]]}
 
 def p_vdeclare(p):
-  '''vdecl : TYPE var'''
-  p[0] = {node: vdecl, typ: p[1], var: p[2]}
+  '''vdecl : TYPE GLOBID'''
+  print(p[1])
+  p[0] = {node: vdecl, typ: inter, var: p[2]}
 
 
 def p_tdecls(p):
