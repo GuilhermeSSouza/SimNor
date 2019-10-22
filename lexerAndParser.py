@@ -20,12 +20,14 @@ RESERVED = {
   'void' : 'void',
   'ref' : 'ref',
   'noalias' : 'noalias',
-  'extern' : 'EXTERN'
+  'extern' : 'EXTERN',
+  'Array' : 'Array'
 }
 
 tokens = [
    'lit',
-   'slit',
+   #'slit',
+
 
    'PLUS',
    'Minus',
@@ -47,6 +49,8 @@ tokens = [
    'RParen',
    'LBracket',
    'RBracket',
+   'LSquare',
+   'RSquare',
    'COMMA',
 
    #'newline',
@@ -78,8 +82,10 @@ t_Equal = r'='
 
 t_LParen  = r'\('
 t_RParen  = r'\)'
-t_LBracket = r'{'
-t_RBracket = r'}'
+t_LBracket = r'\{'
+t_RBracket = r'\}'
+t_LSquare = r'\['
+t_RSquare = r'\]'
 t_COMMA = r','
 
 t_Semicolon = r';'
@@ -88,10 +94,10 @@ t_Semicolon = r';'
 t_ignore  = ' \t'
 
 
-def t_slit(t):
-  r'"[^\"]*"'
-  t.value = t.value[1:-1]
-  return t
+#def t_slit(t):
+  #r'"[^\"]*"'
+  #t.value = t.value[1:-1]
+  #return t
 
 
 ############## comment ##############
@@ -259,6 +265,12 @@ def p_print(p):
   '''stmt : Print exp Semicolon'''
   p[0] = {name : printStmt, exp : p[2]}
 
+
+
+def p_arrayDireto(p):
+	'''stmt : Array LSquare lit RSquare '''
+	p[0] = {name: arrayStmt, value: p[3], typ: "int"}
+
 # ############## exps ##############
 def p_exps(p):
   ''' exps : exp
@@ -268,6 +280,14 @@ def p_exps(p):
   else:
     appendByKey(p[3], exps, p[1])
     p[0] = p[3]
+
+# def p_expSquare(p):
+#   '''exp : LSquare GLOBID RSquare'''
+#   p[0] = {name: varExp, var: p[2]}
+
+# def p_expSquareLit(p):
+#   '''exp : LSquare lit RSquare'''
+#   p[0] = {name: ret_index, value: p[2], typ: "int"}  
 
 def p_expParen(p):
   '''exp : LParen exp RParen'''
@@ -280,9 +300,9 @@ def p_exp(p):
   # else:
   p[0] = {name: litExp, value: p[1], typ: "int"}
 
-def p_slit(p):
-  '''exp : slit''' 
-  p[0] = {name: slitExp, value: p[1], typ: "slit"}
+#def p_slit(p):
+ # '''exp : slit''' 
+  #p[0] = {name: slitExp, value: p[1], typ: "slit"}
 
 def p_expBinOpUop(p):
   '''exp : binop'''

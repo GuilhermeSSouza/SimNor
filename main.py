@@ -89,6 +89,22 @@ if __name__== "__main__":
     print(errors[-1])
 
 
+
+def find(key, dictionary):
+    if not isinstance(dictionary, dict):
+        return None
+    for k, v in dictionary.items():
+        if k == key:
+            yield v
+        elif isinstance(v, dict):
+            for result in find(key, v):
+                yield result
+        elif isinstance(v, list):
+            for d in v:
+                for result in find(key, d):
+                    yield result
+
+
 def executa(code, wholexer):
   
   #print(wholexer)
@@ -103,7 +119,8 @@ def executa(code, wholexer):
   if ast is None:
     return 'AST parsing failure \n' + str(erro[-1]) 
 
-  #print(ast)
+  
+  print(ast)
 
   errors = analyzer.semanticsCheck(ast)
   #print(errors)

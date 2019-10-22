@@ -42,3 +42,6 @@ funcCallExp = "funccall"
 binop = 'binop'
 cint_args= "def"
 inter = "int"
+arrayStmt = "arrayStmt"
+arrayStmtVar = "arrayStmtVar"
+ret_all = "ret_all"

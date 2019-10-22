@@ -1,4 +1,6 @@
 def int main(){
-int a =2;
-return a;
+
+Array[1]
+
+return 1;
 }

@@ -213,8 +213,13 @@ def blk_stmt(stmt, builder, symbols):
 
 def stmt(ast, builder, symbols):
     name = ast["name"]
+
     if name == 'while':
         whileStmt(ast, builder, symbols)
+
+    elif name == 'arrayStmt':
+        print(ast[c.value])
+        array(ast[c.value], builder, symbols)
 
     elif name == 'if':
         # if_then makes own blocks
@@ -239,6 +244,12 @@ def stmt(ast, builder, symbols):
 
     else:
         raise RuntimeError('this is not processed: ' + str(ast))
+
+def array(ast, builder, symbols):
+
+    pass
+
+
 
 
 def convert_to_string(builder, ir_object):
@@ -607,6 +618,17 @@ def deference(builder, p):
 def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
     name = ast[c.name]
     try:
+        #Ok, falta pegar o index do vetor base definido qdo se cria cada registrador
+        #if name == c.ret_index:
+         #   return ir.Constant(to_ir_type(ast['type']), ast['value'])
+
+
+
+
+
+
+
+            
         #if name == c.uop:
            # return uop(ast, symbols, builder, cint)
         if name == c.litExp:
@@ -621,8 +643,8 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
 
             r = ir.Constant(to_ir_type(ast['type']), ast['value'])
             return r
-        if name == c.slitExp:
-            return ast["value"]
+        #if name == c.slitExp:
+         #   return ast["value"]
             #raise RuntimeError('slit should never hit here')
         if name == c.varExp:
             id = ast[c.var]
