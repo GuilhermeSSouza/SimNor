@@ -267,9 +267,22 @@ def p_print(p):
 
 
 
-def p_arrayDireto(p):
-	'''stmt : Array LSquare lit RSquare '''
-	p[0] = {name: arrayStmt, value: p[3], typ: "int"}
+
+def p_arrayGLOBID(p):
+	'''stmt : GLOBID Equal Vector Semicolon '''
+	p[0] = {name: stmtEqual, var: p[1], array: p[3], typ: "int"}
+
+
+def p_vector(p):
+  '''Vector : Array LSquare  RSquare
+            | Array LSquare lit RSquare
+            | Array LSquare GLOBID RSquare'''
+
+  if len(p)==4:
+    p[0] = {name: arrayStmt, value: None, typ: "int"}
+  else:
+    p[0] = {name: arrayStmt, value: p[3], typ: "int"}
+
 
 # ############## exps ##############
 def p_exps(p):

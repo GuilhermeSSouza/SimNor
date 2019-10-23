@@ -2,6 +2,7 @@ from llvmlite import ir
 import llvmlite.binding as llvm
 import constants as c
 import copy
+import numpy as np
 #from ctypes import CFUNCTYPE, c_int, c_float
 import llvm_binder
 
@@ -217,9 +218,13 @@ def stmt(ast, builder, symbols):
     if name == 'while':
         whileStmt(ast, builder, symbols)
 
-    elif name == 'arrayStmt':
-        print(ast[c.value])
-        array(ast[c.value], builder, symbols)
+    elif name == 'stmtEqual':
+        if ast[c.var] in symbols:
+            array(ast, builder, symbols)
+        else:
+            raise RuntimeError('Not defined variables: ' + str(ast[c.var]))
+
+        
 
     elif name == 'if':
         # if_then makes own blocks
@@ -245,9 +250,107 @@ def stmt(ast, builder, symbols):
     else:
         raise RuntimeError('this is not processed: ' + str(ast))
 
+
+
+# INDEX OUT OF RANGE NEED SOLVER....
 def array(ast, builder, symbols):
 
-    pass
+    if ast[c.array][c.value] == None:
+        
+        if '#prime' in symbols:
+            ptr = symbols['#prime']
+            valor_stored = builder.load(ptr)
+            var_recebe = symbols[ast[c.var]] 
+            builder.store(valor_stored, var_recebe)
+
+
+        else:
+            int_0 = ir.Constant(i32, 1)
+            var_recebe = symbols[ast[c.var]] 
+            builder.store(int_0, var_recebe)
+
+
+
+    elif ast[c.array][c.value] in symbols:
+
+
+        var_name = symbols[ast[c.array][c.value]]
+        
+
+
+        if '#array' in symbols:
+
+            ptr = symbols['#array']
+
+            int_0 = ir.Constant(i32, 0)
+            value = builder.load(var_name)
+            
+
+            # index out of range criar
+
+            address = builder.gep(ptr, [int_0, value])
+            valor_stored = builder.load(address)
+            var_recebe = symbols[ast[c.var]] 
+            builder.store(valor_stored, var_recebe)
+        else:
+            array_example = array_example =[0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            print(array_example)
+            array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
+            arr = ir.Constant(array_type, array_example)
+            ptr = builder.alloca(array_type) #allocate memory
+            builder.store(arr, ptr)
+
+            symbols['#array'] = ptr
+            #print(symbols)
+            int_0 = ir.Constant(i32, 0)
+            value = builder.load(var_name)
+            
+            
+            # index out of range criar
+
+            address = builder.gep(ptr, [int_0, value])
+            valor_stored = builder.load(address)
+            
+            var_recebe = symbols[ast[c.var]]
+            
+            builder.store(valor_stored, var_recebe)
+
+
+        
+    else:
+
+        value_int = ast[c.array][c.value]
+                
+        # index out of range criar
+
+        if '#array' in symbols:
+            ptr = symbols['#array']
+
+            int_0 = ir.Constant(i32, 0)
+            value = ir.Constant(i32, value_int)
+            address = builder.gep(ptr, [int_0, value])
+            var_name = symbols[ast[c.var]]
+            valor_stored = builder.load(address)
+            builder.store(valor_stored, var_name)
+        else:
+            array_example =[0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            
+            #array_example = [3,5,8]
+            array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
+            arr = ir.Constant(array_type, array_example)
+            ptr = builder.alloca(array_type) #allocate memory
+            builder.store(arr, ptr)
+            symbols['#array'] = ptr
+            
+            int_0 = ir.Constant(i32, 0)
+            value = value = ir.Constant(i32, value_int)
+            address = builder.gep(ptr, [int_0, value])
+            valor_stored = builder.load(address)
+            var_name = symbols[ast[c.var]]
+
+            builder.store(valor_stored, var_name)
 
 
 
@@ -383,6 +486,7 @@ def vardeclstmt(ast, builder, symbols):
     vtype = to_ir_type(var_type)
     ptr = builder.alloca(vtype)
     symbols[var_name] = ptr
+
     exp = ast[c.exp]
     cint = False
     if "cint" in ast[c.vdecl][c.typ]:
@@ -402,6 +506,7 @@ def vardeclstmt(ast, builder, symbols):
 
     try:
         builder.store(value, ptr)
+
     except TypeError as err:
         raise RuntimeError('error converting: ' + str(ast), err)
 
@@ -687,9 +792,13 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
             cint = False
             if "cint" in ast["type"]:
                 cint = True
-            value = expression(ast["exp"], symbols, builder, cint = cint)
-            store_helper(builder, ptr, value)
-            return None
+
+            if ast["exp"] is not None:
+                value = expression(ast["exp"], symbols, builder, cint = cint)
+                store_helper(builder, ptr, value)
+                return None
+            if ast["array"] is not None:
+                return None
 
         raise RuntimeError('Not processed: ' + str(ast))
 

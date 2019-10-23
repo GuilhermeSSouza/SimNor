@@ -278,12 +278,10 @@ def p_exps(p):
     p[0] = p[3]
 
 
-def p_arrayDireto(p):
-  '''stmt : Array LSquare lit RSquare'''
-  p[0] = {name: arrayStmt, value: p[3], typ: 'int'}
 
 
-# def p_expSquare(p):
+
+    # def p_expSquare(p):
 #   '''exp : LSquare GLOBID RSquare'''
 #   p[0] = {name: varExp, var: p[2]}
 
