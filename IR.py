@@ -257,17 +257,162 @@ def array(ast, builder, symbols):
 
     if ast[c.array][c.value] == None:
         
-        if '#prime' in symbols:
-            ptr = symbols['#prime']
-            valor_stored = builder.load(ptr)
-            var_recebe = symbols[ast[c.var]] 
-            builder.store(valor_stored, var_recebe)
+        
+        symbol_table = {}
 
+        if '#array' in symbols:
+            symbol_table['vetor'] = symbols['#array']
 
         else:
-            int_0 = ir.Constant(i32, 1)
-            var_recebe = symbols[ast[c.var]] 
-            builder.store(int_0, var_recebe)
+
+            array_example =[0,1,2,1,1,0,0,0,0,0]
+            #print(array_example)
+            array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
+            arr = ir.Constant(array_type, array_example)
+            ptr = builder.alloca(array_type) #allocate memory
+            builder.store(arr, ptr)
+
+            symbols['#array'] = ptr
+            symbol_table['vetor'] = ptr
+
+
+
+
+
+
+        i32_100 = ir.Constant(i32, 10)
+        i32_0 = ir.Constant(i32, 0)
+        i32_1 = ir.Constant(i32, 1)
+        
+        array_prime = [2,3,5,7,11,13,17,19,23,31]
+
+        array_type = ir.ArrayType(i32, 10)
+        arr = ir.Constant(array_type, array_prime)
+        ptr = builder.alloca(array_type)
+        builder.store(arr, ptr)
+
+        symbol_table["#array_prime"] = ptr
+
+
+
+        value_array = builder.alloca(i32)
+        builder.store(i32_1, value_array)
+
+
+        symbol_table["value_array"] = value_array
+
+
+        for_body_block = builder.append_basic_block("for_body_externo")
+        for_after_block = builder.append_basic_block("for_after_externo")
+
+        for_body_block_interno = builder.append_basic_block("for_body")
+        for_after_block_interno = builder.append_basic_block("for_after")
+
+
+
+        
+
+
+        #iniciando o for(int i = 0; ...)
+
+        i_ptr = builder.alloca(i32)
+        i_value = ir.Constant(i32, 0)
+        builder.store(i_value, i_ptr)
+
+        symbol_table["i"]=i_ptr
+
+
+        #Fazendo i< 28; Quando i =0
+
+        current_i_value = builder.load(symbol_table["i"])
+
+        cond_head = builder.icmp_signed('<', current_i_value, i32_100, name="lt")
+
+        builder.cbranch(cond_head, for_body_block, for_after_block)
+        builder.position_at_start(for_body_block)
+
+        current_i_value = builder.load(symbol_table["i"])
+        array_i_ponter = builder.gep(symbol_table["vetor"], [i32_0, current_i_value])
+        max_j_value = builder.load(array_i_ponter)
+
+        
+        
+
+        #operação do for
+
+
+        # Aqui dentro tem q fazer o segundo for       
+
+
+
+        
+        
+        #iniciando o for(int i = 0; ...)
+
+        j_ptr = builder.alloca(i32)
+        j_value = ir.Constant(i32, 0)
+        builder.store(j_value, j_ptr)
+
+        symbol_table["j"]=j_ptr
+
+        #Fazendo i< 28; Quando i =0
+
+        current_j_value = builder.load(symbol_table["j"])
+
+        cond_head_interno = builder.icmp_signed('<', current_j_value, max_j_value, name="lt")
+
+        builder.cbranch(cond_head_interno, for_body_block_interno, for_after_block_interno)
+        builder.position_at_start(for_body_block_interno)
+
+
+
+
+        value_atual = builder.load(symbol_table["value_array"])
+        value_primo_pointer = builder.gep(symbol_table["#array_prime"], [i32_0, current_i_value])
+        value_primo_prod = builder.load(value_primo_pointer)
+
+
+        value_prod = builder.mul(value_atual, value_primo_prod, name="mul")
+        builder.store(value_prod, symbol_table["value_array"])
+
+
+        #Fim do for interno
+
+
+
+        current_j_value = builder.load(symbol_table["j"])
+        new_j_value = builder.add(current_j_value, i32_1, name="add")
+        builder.store(new_j_value, symbol_table["j"])
+
+        cond_body_interno = builder.icmp_signed('<', new_j_value, max_j_value, name="lt")
+        builder.cbranch(cond_body_interno, for_body_block_interno, for_after_block_interno)
+
+        builder.position_at_start(for_after_block_interno)
+
+        # Inicio da incremento no valor de i, for_externo
+
+
+
+
+
+
+
+
+        new_i_value = builder.add(current_i_value, i32_1, name="add")
+        builder.store(new_i_value, symbol_table["i"])
+        cond_body = builder.icmp_signed('<', new_i_value, i32_100, name="lt")
+        builder.cbranch(cond_body, for_body_block, for_after_block)
+
+        builder.position_at_start(for_after_block)
+
+        #Load do valor final e atribuição a variavel q chamou ele
+
+        var_recebe = symbols[ast[c.var]] 
+        value_stored = builder.load(symbol_table["value_array"])
+        builder.store(value_stored, var_recebe)
+
+
+
 
 
 
@@ -293,9 +438,9 @@ def array(ast, builder, symbols):
             var_recebe = symbols[ast[c.var]] 
             builder.store(valor_stored, var_recebe)
         else:
-            array_example = array_example =[0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
- 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            print(array_example)
+            array_example = array_example =[0,0,0,0,0,0,0,0,0,0] #, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ #0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            #print(array_example)
             array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
             arr = ir.Constant(array_type, array_example)
             ptr = builder.alloca(array_type) #allocate memory
@@ -334,8 +479,8 @@ def array(ast, builder, symbols):
             valor_stored = builder.load(address)
             builder.store(valor_stored, var_name)
         else:
-            array_example =[0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
- 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            array_example =[0,0,0,0,0,0,0,0,0,0] #, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ #0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             
             #array_example = [3,5,8]
             array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.

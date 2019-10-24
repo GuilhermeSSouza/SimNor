@@ -1,10 +1,10 @@
 def int main(){
 
 int a =0;
-int b= 0;
-a = Array[b];
-int c =0;
-c = Array[b];
+int b= 10;
+#a = Array[b];
+int c =100;
+c= Array[];
 
 return c;
 

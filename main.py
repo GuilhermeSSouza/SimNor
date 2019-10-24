@@ -127,6 +127,7 @@ def executa(code, wholexer):
 
   if not errors:  
     module = IR.mainFunc(ast, '*')
+    #print(module)
     module = llvm_binder.bind(module, '*', optimize = False)
     return module[1]
   else:    
