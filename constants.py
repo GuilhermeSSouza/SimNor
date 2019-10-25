@@ -47,3 +47,5 @@ arrayStmtVar = "arrayStmtVar"
 ret_all = "ret_all"
 stmtEqual = 'stmtEqual'
 array = 'array'
+stmtOpera = 'stmtOpera'
+op = 'op'

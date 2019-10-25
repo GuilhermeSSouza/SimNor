@@ -223,8 +223,8 @@ def stmt(ast, builder, symbols):
             array(ast, builder, symbols)
         else:
             raise RuntimeError('Not defined variables: ' + str(ast[c.var]))
-
-        
+    elif name == 'stmtOpera':
+        arrayOpera(ast, builder, symbols)
 
     elif name == 'if':
         # if_then makes own blocks
@@ -252,6 +252,128 @@ def stmt(ast, builder, symbols):
 
 
 
+# verificar se index maior que o index passado para receber a soma e a subtração não seja menor que zero
+
+def arrayOpera(ast, builder, symblos):
+
+    i32_0 = ir.Constant(i32, 0)
+
+    if ast[c.op] == "+":
+        
+
+        if ast[c.var] in symblos:
+            value_op = builder.load(symblos[ast[c.var]])
+
+            if '#array' in symblos:
+                      
+                array_poiter = builder.gep(symblos['#array'], [i32_0, value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.add(array_i_value, valor_somado, name="add")
+                builder.store(new_value_index, array_poiter)
+            else:
+                array_example =[0,0,0,0,0,0,0,0,0,0]
+                #print(array_example)
+                array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
+                arr = ir.Constant(array_type, array_example)
+                ptr = builder.alloca(array_type) #allocate memory
+                builder.store(arr, ptr)
+                symblos['#array'] = ptr            
+                array_poiter = builder.gep(symblos['#array'],[i32_0,value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.add(array_i_value, valor_somado, name="add")
+                builder.store(new_value_index, array_poiter)
+        else:
+
+            print(ast['var'])
+            value_op = ir.Constant(i32, ast['var'])
+            #builder.store(ast[c.var], value_op)
+            print(value_op)
+
+            if '#array' in symblos:
+                
+                
+                array_poiter = builder.gep(symblos['#array'], [i32_0, value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.add(array_i_value, valor_somado, name="add")
+                builder.store(new_value_index, array_poiter)
+            else:
+                array_example =[0,0,0,0,0,0,0,0,0,0]
+                #print(array_example)
+                array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
+                arr = ir.Constant(array_type, array_example)
+                ptr = builder.alloca(array_type) #allocate memory
+                builder.store(arr, ptr)
+                symblos['#array'] = ptr            
+                array_poiter = builder.gep(symblos['#array'],[i32_0,value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.add(array_i_value, valor_somado, name="add")
+                builder.store(new_value_index, array_poiter)
+    else:
+
+        
+        if ast[c.var] in symblos:
+            value_op = builder.load(symblos[ast[c.var]])
+
+            if '#array' in symblos:               
+
+
+                array_poiter = builder.gep(symblos['#array'], [i32_0, value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.sub(array_i_value, valor_somado, name="sub")
+                builder.store(new_value_index, array_poiter)
+            else:
+                array_example =[0,0,0,0,0,0,0,0,0,0]
+                #print(array_example)
+                array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
+                arr = ir.Constant(array_type, array_example)
+                ptr = builder.alloca(array_type) #allocate memory
+                builder.store(arr, ptr)
+                symblos['#array'] = ptr            
+                array_poiter = builder.gep(symblos['#array'],[i32_0,value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.sub(array_i_value, valor_somado, name="sub")
+                builder.store(new_value_index, array_poiter)
+        else:
+
+            value_op = ir.Constant(i32, ast[c.var])
+
+            if '#array' in symblos:
+                                
+                array_poiter = builder.gep(symblos['#array'], [i32_0, value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.sub(array_i_value, valor_somado, name="sub")
+                builder.store(new_value_index, array_poiter)
+            else:
+                array_example =[0,0,0,0,0,0,0,0,0,0]
+                #print(array_example)
+                array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
+                arr = ir.Constant(array_type, array_example)
+                ptr = builder.alloca(array_type) #allocate memory
+                builder.store(arr, ptr)
+                symblos['#array'] = ptr            
+                array_poiter = builder.gep(symblos['#array'],[i32_0,value_op])
+                array_i_value = builder.load(array_poiter)
+                valor_somado = ir.Constant(i32, ast[c.value])
+
+                new_value_index = builder.sub(array_i_value, valor_somado, name="sub")
+                builder.store(new_value_index, array_poiter)
+
+
+        
 # INDEX OUT OF RANGE NEED SOLVER....
 def array(ast, builder, symbols):
 
@@ -265,7 +387,7 @@ def array(ast, builder, symbols):
 
         else:
 
-            array_example =[0,1,2,1,1,0,0,0,0,0]
+            array_example =[0,0,0,0,0,0,0,0,0,0]
             #print(array_example)
             array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
             arr = ir.Constant(array_type, array_example)

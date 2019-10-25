@@ -265,7 +265,12 @@ def p_print(p):
   '''stmt : Print exp Semicolon'''
   p[0] = {name : printStmt, exp : p[2]}
 
-
+def p_arrayOperator(p):
+  '''stmt : Array LSquare lit RSquare PLUS lit Semicolon
+          | Array LSquare GLOBID RSquare  PLUS lit Semicolon
+          | Array LSquare lit RSquare Minus lit Semicolon
+          | Array LSquare GLOBID RSquare Minus lit Semicolon '''
+  p[0] = {name: stmtOpera, var: p[3], value: p[6], op: p[5]}
 
 
 def p_arrayGLOBID(p):

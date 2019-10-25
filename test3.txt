@@ -1,0 +1,15 @@
+def int main(){
+
+int b= 10;
+int c =100;
+
+Array[1]-2;
+Array[0]+1;
+
+c= Array[];
+
+return c;
+
+
+
+}
