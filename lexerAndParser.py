@@ -118,12 +118,12 @@ def t_Comment(t):
 # Check for reserved words
 def t_lit(t):
   r'\d+'
-  t.value = t.value.replace(" ", "")
-  if '.' in t.value:
-    t.value = int(t.value)
-  else:
-    t.value = int(t.value)
-    t.type = 'lit'
+  #t.value = t.value.replace(" ", "")
+  #if '.' in t.value:
+   # t.value = int(t.value)
+  #else:
+  t.value = int(t.value)
+  t.type = 'lit'
   return t
 
 ############## globid ##############

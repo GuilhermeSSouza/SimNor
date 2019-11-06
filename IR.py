@@ -1,22 +1,30 @@
+# Core do simulador, este arquivo converte a AST em codigo intermediario (usando llvmlite)
+#Desta forma, cada um dos metodos abaixo fazem a converção de algum "Ramo" em uma estrutura que seja processada pela máquina
+
+
+
+
 from llvmlite import ir
 import llvmlite.binding as llvm
 import constants as c
 import copy
 import numpy as np
-#from ctypes import CFUNCTYPE, c_int, c_float
 import llvm_binder
 
 
+#Inicializando llvm e pegando informações sobre o processamento da máquina que executa o simulador
 llvm.initialize()
 llvm.initialize_native_target()
 llvm.initialize_native_asmprinter()
 
+#Algumas constantes para facilitar a codificação
 i32 = ir.IntType(64)
 i1 = ir.IntType(1)
 f32 = ir.FloatType()
+i128 = ir.IntType(128)
 
 
-#Get type int or void for functions or variables reference
+#Pega a referencia das funções e variavéis declaradas dentro do codigo
 #Ref Type, is referece memory location (no copy refrence), this is true real obeject memory
 
 def ir_type(string):
@@ -34,7 +42,7 @@ def ir_type(string):
 
 
 
-#Exetern func refence for callfunc in code 
+#Exetern mecanismo usado para chamar funções dentro do codigo (CallFunc) 
 
 def externs(extern, module, *sysArgs):
     returnType = ir_type(extern["ret_type"])
@@ -52,10 +60,11 @@ def externs(extern, module, *sysArgs):
         pass
 
     else:
-        fnty = ir.FunctionType(returnType, args)  # func = ir.Function(module, functionType, name = i["globid"] )
+        fnty = ir.FunctionType(returnType, args)  
         func = ir.Function(module, fnty, name=extern["globid"])
 
 
+#Localiza e aloca memoria para os possiveis parametros dentro do codigo 
 def getArg(module,  sysArgs):
     sysArgs = [
         int(float(value)) for value in sysArgs
@@ -80,13 +89,7 @@ def getArg(module,  sysArgs):
     for number, arg in enumerate(sysArgs):
         int_1 = ir.Constant(i32, arg)
 
-        #the million ifs
-    #     index_1 = ir.Constant(i32, number)
-
-    #     cond = builder.icmp_signed("==", value, index_1)
-    #     with builder.if_then(cond):
-    #         builder.ret(int_1)
-
+        
         builder.insert_value(arr, int_1, number)
     builder.store(arr, ptr)
 
@@ -127,7 +130,8 @@ def getArgf(module, sysArgs):
     builder.ret(builder.load(address))
 
 
-#Func convert the fucntion in the code in IR code for compile
+#Func todo o codigo escrito no simulador e visto com um programa (função), esse metodo cria a estrutrua basica para executar
+#cada uma das funções existentes no codigo.
 
 
 def funcs(ast, module, known_funcs):
@@ -172,7 +176,7 @@ def funcs(ast, module, known_funcs):
         builder.ret_void()
         return fnty
     if not returned:
-        raise RuntimeError("function missing return statement")
+        raise RuntimeError("A função não possui retorno valido!")
 
 
 def pure_blk(blk, builder, symbols):
@@ -193,6 +197,8 @@ def populate_known_funcs(symbols, known_funcs):
         symbols[c.cint_args][name] = t[1] 
 
 
+
+#processa declaração de variaveis da AST
 def vdecls(vdec, symbols, function_name):
     variables = vdec["vars"]
     variableList = list()
@@ -212,6 +218,7 @@ def blk_stmt(stmt, builder, symbols):
     return pure_blk(stmt[c.contents], builder, symbols)
 
 
+#Cada função tem dentro de seus blocos stmt, que podem ser vazios ou processar alguma informação, declaração, if, while, callfunc, exp, operações, etc
 def stmt(ast, builder, symbols):
     name = ast["name"]
 
@@ -222,12 +229,11 @@ def stmt(ast, builder, symbols):
         if ast[c.var] in symbols:
             array(ast, builder, symbols)
         else:
-            raise RuntimeError('Not defined variables: ' + str(ast[c.var]))
+            raise RuntimeError('A variavel :   ' + str(ast[c.var]) + '   não foi definida!')
     elif name == 'stmtOpera':
         arrayOpera(ast, builder, symbols)
 
     elif name == 'if':
-        # if_then makes own blocks
         return ifStmt(ast, builder, symbols)
 
     elif name == 'ret':
@@ -237,7 +243,7 @@ def stmt(ast, builder, symbols):
         vardeclstmt(ast, builder, symbols)
 
     elif name == 'expstmt':
-        # Don't make new block, because this stmt is just an exp
+        
         # stmt : exp Semicolon
         expression(ast[c.exp], symbols, builder)
 
@@ -248,11 +254,16 @@ def stmt(ast, builder, symbols):
         printStmt(ast, builder, symbols)
 
     else:
-        raise RuntimeError('this is not processed: ' + str(ast))
+        raise RuntimeError('Código não foi processado corretamente. Verifique o código fonte:   ' + str(ast))
 
 
 
-# verificar se index maior que o index passado para receber a soma e a subtração não seja menor que zero
+# Estrutura que processa vetores (Ou o que o simulador entende por vetors)
+#
+# O sistema inica vetores de forma altomatica, isto é não existe uma "expressão" que inicia um vetor diretamete
+# Esse inicio é feito quando o programador chama EX:
+# Array[1]+ 1;, ou Array[a]+1; ou a = Array[] (esse retorna o produto dos primos elevados aos index do vetor, que na pratica é um numero natural)  
+# A estrutura se manten vida dentro do escopo do metodo
 
 def arrayOpera(ast, builder, symblos):
 
@@ -288,10 +299,10 @@ def arrayOpera(ast, builder, symblos):
                 builder.store(new_value_index, array_poiter)
         else:
 
-            print(ast['var'])
+            
             value_op = ir.Constant(i32, ast['var'])
             #builder.store(ast[c.var], value_op)
-            print(value_op)
+            
 
             if '#array' in symblos:
                 
@@ -622,6 +633,8 @@ def array(ast, builder, symbols):
 
 
 
+
+#Funções possibilitando uma possivel versao terminal... (fragmento de codigo seguindo tutoriias na net)
 def convert_to_string(builder, ir_object):
     if ir_object.type == f32:
         fn = builder.module.globals.get('floatToString')
@@ -671,10 +684,10 @@ def printStmt(ast, builder, symbols):
     fn = builder.module.globals.get('printString')
     builder.call(fn, [ptr_fmt])
 
-
-#make the global variable or find it
+# Todas as variavéis são de escopo logal (a menos que use ref...) embora o codigo possa ser adaptado para uso das variaveis com escopo global
+# Não existe vantegem nisso, ao contrario somente perca de desempenho 
 def find_global_constant(builder,name, value):
-    #adapted from tutorial https://github.com/cea-sec/miasm/blob/master/miasm2/jitter/llvmconvert.py
+    #adapted https://github.com/cea-sec/miasm/blob/master/miasm2/jitter/llvmconvert.py
     if name in builder.module.globals:
         return builder.module.globals[name]
     else:
@@ -684,6 +697,8 @@ def find_global_constant(builder,name, value):
         return glob
 
 
+
+#Bloco do while
 def whileStmt(ast, builder, symbols):
     w_body_block = builder.append_basic_block("w_body")
     w_after_block = builder.append_basic_block("w_after")
@@ -700,6 +715,8 @@ def whileStmt(ast, builder, symbols):
     builder.position_at_start(w_after_block)
 
 
+
+#Bloco do if
 def ifStmt(ast, builder, symbols):
 
     cond = expression(ast["cond"], symbols, builder)
@@ -740,13 +757,12 @@ def returnStmt(ast, builder, symbols):
     return True
 
 
+#Processa declaração de variavel
 def vardeclstmt(ast, builder, symbols):
     var_declaration = ast[c.vdecl]
     var_type = var_declaration[c.typ]
     var_name = var_declaration[c.var]
-    ####### inner variables clashes the outer ones
-    # if var_name in symbols:
-    #     raise RuntimeError(var_name + ' has already been defined')
+    
     if 'ref' in var_type:
         return ref_var_decl_stmt(ast, builder, symbols)
 
@@ -775,12 +791,12 @@ def vardeclstmt(ast, builder, symbols):
         builder.store(value, ptr)
 
     except TypeError as err:
-        raise RuntimeError('error converting: ' + str(ast), err)
+        raise RuntimeError('Erro de alocação do Tipo de variavel:    ' + str(ast), err)
 
 
 def ref_var_decl_stmt(ast, builder, symbols):
     var_declaration = ast[c.vdecl]
-    var_type = var_declaration[c.typ]   # type checking for both side
+    var_type = var_declaration[c.typ]   
     var_name = var_declaration[c.var]
     exp = ast[c.exp]
     pointee = expression(exp, symbols, builder)
@@ -805,13 +821,16 @@ def extract_value(exp, builder):
 
 
 def binop(ast, symbols, builder, target_type, cint = False):
-    lhs = expression(ast["lhs"], symbols, builder, cint = cint)  ###some functions
-    rhs = expression(ast["rhs"], symbols, builder, cint = cint)  ###
+    lhs = expression(ast["lhs"], symbols, builder, cint = cint)  
+    rhs = expression(ast["rhs"], symbols, builder, cint = cint)  
     lhs = extract_value(lhs, builder)
     rhs = extract_value(rhs, builder)
     exp_type = target_type
     op = ast["op"]
 
+
+
+    # Codigo sequindo tutoriais na net 
 
     # if lhs.type != i1 and rhs.type != i1:
     #     if op != "logAnd" and op != "logOr":
@@ -847,10 +866,15 @@ def binop(ast, symbols, builder, target_type, cint = False):
         if "int" in exp_type:
             if op == 'mul':
                 return builder.mul(lhs, rhs, name='mul')
+                #result = builder.smul_with_overflow(lhs, rhs, name='mul')
+                #return builder.extract_value(result, 0)
+                
+
             elif op == 'div':
                 return builder.sdiv(lhs, rhs, name='div')
             elif op == 'add':
                 return builder.add(lhs, rhs, name="add")
+                
             elif op == 'sub':
 
 
@@ -864,9 +888,11 @@ def binop(ast, symbols, builder, target_type, cint = False):
                     with then:
                         bb_then = builder.basic_block
                         out_then = builder.sub(lhs, lhs, name = 'out_then')
+                        
                     with otherwise:
                         bb_otherwise = builder.basic_block
                         out_otherwise = builder.sub(lhs,rhs, name = 'out_otherwise')
+                        
                 
                 endif = builder.block
                 out_phi = builder.phi(i32)
@@ -903,9 +929,9 @@ def binop(ast, symbols, builder, target_type, cint = False):
         #     elif op == 'gt':
         #         return builder.fcmp_ordered('>', lhs, rhs, name="gt", flags = flags)
     except ValueError as err:
-        raise RuntimeError('Error processing: ' + str(ast), err)
-    except AttributeError as err:
-        raise RuntimeError('Error processing: ' + str(ast), err)
+        raise RuntimeError('Erro ao pocessar a operação:  ' + str(ast) + '  ' + str(err))
+    except AttributeError as err: 
+        raise RuntimeError('Erro ao processar a operação:  ' + str(ast)+ '  ' + str(err))
 
 # def check_int(lhs, rhs, builder, op):
 #     result = None
@@ -989,6 +1015,7 @@ def deference(builder, p):
 
 def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
     name = ast[c.name]
+    
     try:
         #Ok, falta pegar o index do vetor base definido qdo se cria cada registrador
         #if name == c.ret_index:
@@ -1003,15 +1030,41 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
             
         #if name == c.uop:
            # return uop(ast, symbols, builder, cint)
+
+
+           #Refatorar essa parte e criar o overflow ou 
+
+
+
+        if name == 'lit':
+              #18.446.744.073.709.551.616
+            limit = 9223372036854775807
+                
+            #    print(ast['value'])
+
+            if ast['value'] > limit:
+                raise RuntimeError('Valor acima do suportado: valor overflow')
+                    
+            if exception and ast['value'] <= 9223372036854775808:
+                raise RuntimeError('Valor acima do suportado: valor overflow')
+
+            r = ir.Constant(to_ir_type(ast['type']), ast['value'])
+            return r
+
+
+
         if name == c.litExp:
             if cint:
-                limit = 2147483647
-                if neg:
-                    limit += 1
-                if ast['value'] > limit or ast['value'] <= -2147483647:
-                    overflows(ast, builder)
-                if exception and ast['value'] == 2147483648:
-                    raise Error2147483648
+                #18.446.744.073.709.551.616
+                limit = 9223372036854775807
+                
+                print(ast['value'])
+
+                if ast['value'] > limit:
+                    raise RuntimeError('Valor acima do suportado: valor overflow')
+                    
+                if exception and ast['value'] <= 9223372036854775808:
+                    raise RuntimeError('Valor acima do suportado: valor overflow')
 
             r = ir.Constant(to_ir_type(ast['type']), ast['value'])
             return r
@@ -1024,7 +1077,7 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
                 
                 return symbols[id]
             except TypeError as err:
-                raise RuntimeError('Error parsing: ' + str(ast), err)
+                raise RuntimeError('Erro ao fazer parse: ' + str(ast) + '  ' + str(err))
         if name == c.funcCallExp:
             function_name = ast[c.globid]
             fn = builder.module.globals.get(function_name)
@@ -1150,8 +1203,7 @@ def convert(ast, module, *sysArgs):
 
         
     # Code from  https://github.com/cea-sec/miasm/blob/master/miasm2/jitter/llvmconvert.py
-    # search for printf to find it easier
-
+    
 
 def define_built_ins(module, known_funcs):
     char_pointer = ir.IntType(8).as_pointer()

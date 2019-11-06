@@ -118,12 +118,12 @@ def t_Comment(t):
 # Check for reserved words
 def t_lit(t):
   r'\d+'
-  t.value = t.value.replace(" ", "")
-  if '.' in t.value:
-    t.value = int(t.value)
-  else:
-    t.value = int(t.value)
-    t.type = 'lit'
+  #t.value = t.value.replace(" ", "")
+  #if '.' in t.value:
+   # t.value = int(t.value)
+  #else:
+  t.value = int(t.value)
+  t.type = 'lit'
   return t
 
 ############## globid ##############
@@ -138,7 +138,7 @@ def t_GLOBID(t):
 def t_newline(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
-  pass
+  
 
 
 # Error handling rule
@@ -265,6 +265,34 @@ def p_if(p):
     p[0] = {name: ifStmt, cond: p[3], stmt: p[5]}
   else:
     p[0] = {name: ifStmt, cond: p[3], stmt: p[5], else_stmt: p[7]}
+
+
+def p_arrayOperator(p):
+  '''stmt : Array LSquare lit RSquare PLUS lit Semicolon
+          | Array LSquare GLOBID RSquare  PLUS lit Semicolon
+          | Array LSquare lit RSquare Minus lit Semicolon
+          | Array LSquare GLOBID RSquare Minus lit Semicolon '''
+  p[0] = {name: stmtOpera, var: p[3], value: p[6], op: p[5]}
+
+
+def p_arrayGLOBID(p):
+  '''stmt : GLOBID Equal Vector Semicolon '''
+  p[0] = {name: stmtEqual, var: p[1], array: p[3], typ: "int"}
+
+
+def p_vector(p):
+  '''Vector : Array LSquare  RSquare
+            | Array LSquare lit RSquare
+            | Array LSquare GLOBID RSquare'''
+
+  if len(p)==4:
+    p[0] = {name: arrayStmt, value: None, typ: "int"}
+  else:
+    p[0] = {name: arrayStmt, value: p[3], typ: "int"}
+
+
+
+
 
 
 # ############## exps ##############

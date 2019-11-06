@@ -31,62 +31,62 @@ def emit_ir(fileName, module):
   file.close()
 
 
-if __name__== "__main__":
-  parser = argparse.ArgumentParser(
-    description='Simulador Máquina Norma\' Compiler')
-  parser.add_argument('input_file', metavar='input_file',
-                    help='input file name')
-  parser.add_argument('-emit-ast', action='store_true',
-                    default=True,
-                    dest='boolean_emit_ast',
-                    help='generate ast'),
-  parser.add_argument('-emit-llvm', action='store_true',
-                  default=False,
-                  dest='boolean_emit_llvm',
-                  help='generate ast')
-  parser.add_argument('-jit', action='store_true',
-                default=True,
-                dest='boolean_jit',
-                help='generate ast'),
-  parser.add_argument('-o', action='store',
-                    dest='output_file',
-                    help='output file name',
-                    required=False)
-  parser.add_argument('-O3)', action='store_true',
-                  dest='optimization3',
-                  help='optimization IR',
-                  required=False)
-  parser.add_argument('sysarg', nargs='*')
-  args = parser.parse_args()
-  if not args.boolean_jit and args.output_file is None:
-      raise RuntimeError("at least one of -jit or -o should be specified!")
+# if __name__== "__main__":
+#   parser = argparse.ArgumentParser(
+#     description='Simulador Máquina Norma\' Compiler')
+#   parser.add_argument('input_file', metavar='input_file',
+#                     help='input file name')
+#   parser.add_argument('-emit-ast', action='store_true',
+#                     default=True,
+#                     dest='boolean_emit_ast',
+#                     help='generate ast'),
+#   parser.add_argument('-emit-llvm', action='store_true',
+#                   default=False,
+#                   dest='boolean_emit_llvm',
+#                   help='generate ast')
+#   parser.add_argument('-jit', action='store_true',
+#                 default=True,
+#                 dest='boolean_jit',
+#                 help='generate ast'),
+#   parser.add_argument('-o', action='store',
+#                     dest='output_file',
+#                     help='output file name',
+#                     required=False)
+#   parser.add_argument('-O3)', action='store_true',
+#                   dest='optimization3',
+#                   help='optimization IR',
+#                   required=False)
+#   parser.add_argument('sysarg', nargs='*')
+#   args = parser.parse_args()
+#   if not args.boolean_jit and args.output_file is None:
+#       raise RuntimeError("at least one of -jit or -o should be specified!")
 
-  code = readFile(args.input_file)
-  ast, erro = lexerAndParser.toAst(code)
-  if ast is None:
-      raise RuntimeError('AST parsing failure')
-  errors = analyzer.semanticsCheck(ast)
-  if not errors:
-
-
-    if args.boolean_emit_ast:
-      emitAst(args.input_file.rsplit('.', 1)[0] + '.ast.yaml', ast)
-
-    module = IR.mainFunc(ast, args.sysarg)
+#   code = readFile(args.input_file)
+#   ast, erro = lexerAndParser.toAst(code)
+#   if ast is None:
+#       raise RuntimeError('AST parsing failure')
+#   errors = analyzer.semanticsCheck(ast)
+#   if not errors:
 
 
-    if args.boolean_jit:
-        module = llvm_binder.bind(module, args.sysarg, optimize = args.optimization3)
-        # module = str(module)
+#     if args.boolean_emit_ast:
+#       emitAst(args.input_file.rsplit('.', 1)[0] + '.ast.yaml', ast)
 
-    if args.boolean_emit_llvm:
-      emit_ir(args.output_file.rsplit('.', 1)[0] + '.ll', module)
+#     module = IR.mainFunc(ast, args.sysarg)
 
-    exitCode = len(errors)
-    print('exit: ' + str(exitCode))
-    sys.exit(exitCode)
-  else:
-    print(errors[-1])
+
+#     if args.boolean_jit:
+#         module = llvm_binder.bind(module, args.sysarg, optimize = args.optimization3)
+#         # module = str(module)
+
+#     if args.boolean_emit_llvm:
+#       emit_ir(args.output_file.rsplit('.', 1)[0] + '.ll', module)
+
+#     exitCode = len(errors)
+#     print('exit: ' + str(exitCode))
+#     sys.exit(exitCode)
+#   else:
+#     print(errors[-1])
 
 
 
@@ -110,6 +110,38 @@ def executa(code, wholexer):
   #print(wholexer)
   ast = None
   erro = None
+ 
+  if wholexer == 2:
+    ast, erro = lexerAndParserL.toAst(code)
+  if wholexer == 1:
+    ast, erro = lexerAndParser.toAst(code)
+
+  if ast is None:
+    return 'Erro ao criar arquivo de parser, verifique o código fonte \n' + str(erro[-1]) 
+
+  
+  print(ast)
+
+  errors = analyzer.semanticsCheck(ast)
+  #print(errors)
+
+  if not errors:  
+    module = IR.mainFunc(ast, '*')
+    #Mostrar codigo em IR
+    print(module)
+    module = llvm_binder.bind(module, '*', optimize = True)
+    return module[1]
+  else:    
+    return '\n'+ str(errors[-1])
+    
+
+
+
+def executaVerificar(code, wholexer):
+  
+  #print(wholexer)
+  ast = None
+  erro = None
 
   if wholexer == 2:
     ast, erro = lexerAndParserL.toAst(code)
@@ -120,19 +152,20 @@ def executa(code, wholexer):
     return 'AST parsing failure \n' + str(erro[-1]) 
 
   
-  print(ast)
+  #print(ast)
 
   errors = analyzer.semanticsCheck(ast)
   #print(errors)
 
-  if not errors:  
-    module = IR.mainFunc(ast, '*')
-    #print(module)
-    module = llvm_binder.bind(module, '*', optimize = False)
-    return module[1]
-  else:    
+  if errors: 
     return '\n'+ str(errors[-1])
+  else:
+    return '\n' + 'Nenhum erro de sintaxe encontrado! Runtime e Exception não são verificados.'  
     
+
+
+
+
 
 
 

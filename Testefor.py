@@ -1,30 +1,7 @@
 def testfor():
-	a =[0,1,2,1]
-	p =[2,3,5,7]
+	x = 184467440737095516170
 
+	print(x/2)
 
-
-	
-	k =1;
-
-
-
-
-
-	for i in range(len(a)):
-
-
-
-
-		for j in range(a[i]):
-			k*=p[i]
-			
-
-
-
-
-
-	print(k)
-		
 
 testfor() 	

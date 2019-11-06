@@ -41,6 +41,7 @@ root.tk.call('wm', 'iconphoto', root._w, ico)
 canvas = tk.Canvas(root, bg ='#FDF5E6', height=HEIGHT, width=WIDTH)
 canvas.pack(expand = YES, fill = BOTH)
 
+
 FONT_T = IntVar()
 FONT_T.set(10)
 var = IntVar()
@@ -70,23 +71,28 @@ def clearCode():
 def clear_lower():
 	label.delete('1.0', 'end-1c')
 
+
+#Se except criar erro (Erro basico ao fechar ignorado)
 def openArquivo():
 	try:
 		fileName = filedialog.askopenfilename(title = "Select File",filetypes = (("txt files","*.txt"),("all files","*.*")))
-		code = main.readFile(fileName)
-		textinput.delete('1.0', 'end-1c')
-		textinput.insert("end-1c", code)
+		if fileName != '':
+			code = main.readFile(fileName)
+			textinput.delete('1.0', 'end-1c')
+			textinput.insert("end-1c", code)
 	except Exception as e:
-		popupmsg('Erro ao abrir o ARQUIVO')
+		pass
 
 def saveArquivo():
 
 	try:
 		fileName = filedialog.asksaveasfile(title = 'Save File',mode = 'w', confirmoverwrite = True, defaultextension = '.txt', filetypes = (("txt files","*.txt"),("all files","*.*")))
-		code = textinput.get("1.0", 'end-1c')
-		fileName.write(code.rstrip())
+		if fileName != '':
+			code = textinput.get("1.0", 'end-1c')
+			fileName.write(code.rstrip())
 	except Exception as e:
-		popupmsg('Erro ao salvar o ARQUIVO')
+		pass
+		
 
 
 
@@ -154,10 +160,23 @@ def inputUse():
 
 
 def execultaSimuldor(code):
-	result = ' \n ************************************* SimNor ************************************* \n'  + '>>Return main::  '+ str(main.executa(code, var.get()))
-	label.insert("end-1c", result)
+	try:
+		result = ' \n ************************************* SimNor ************************************* \n'  + '>>Return main::  '+ str(main.executa(code, var.get()))
+		label.insert("end-1c", result)
+	except RuntimeError as e:
+		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
+	except Exception as e:
+		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
 
 
+def execultaSimuldorVerificar(code):
+	try:
+		result = ' \n ************************************* SimNor ************************************* \n'  + '>>Return main::  '+ str(main.executaVerificar(code, var.get()))
+		label.insert("end-1c", result)
+	except RuntimeError as e:
+		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
+	except Exception as e:
+		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
 
 
 def debugButtom(debug):
@@ -169,6 +188,11 @@ def debugButtom(debug):
 	dado+= str(varDebug.get())
 	label.insert("end-1c",dado)
 
+
+def verificar():
+	entrada = textinput.get("1.0", 'end-1c')
+	execultaSimuldorVerificar(entrada)
+	
 
 
 #creating tkinter window
@@ -223,8 +247,17 @@ label2 = tk.Label(root, text = " CÓDIGO-FONTE ", bg='#FDF5E9')
 label2.place(relx=0.40, rely=0.01)
 
 
+#label4 = tk.Label(root, text = "______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________", bg='#FDF5E9')
+#label4.place(relx=0.0, rely=0.745)
+
+
 label2 = tk.Label(root, text = " RESULTADO MAIN", bg='#FDF5E9')
 label2.place(relx=0.40, rely=0.75)
+
+
+
+label3 = tk.Label(root, text = " @Licença livre: Desenvolvido por GuilhermeSSouza - Software Engineer", bg='#FDF5E9')
+label3.place(relx=0.30, rely=0.976)
 
 frame = tk.Frame(root, bg='#FDF5E9', bd=5)
 frame.place(relx=0.53, rely=0.03, relwidth=0.85, relheight=0.7, anchor='n')
@@ -258,7 +291,7 @@ R1.place(relx = 0.01, rely = 0.08, anchor = NW )
 
 #Input text code
 
-textinput = tk.Text(frame, font=(NORM_FONT, 15) )
+textinput = tk.Text(frame, font=(NORM_FONT, 15), undo=True, )
 textinput.place(relwidth=0.80, relheight=1)
 
 scrollBar_input = tk.Scrollbar(frame)
@@ -273,7 +306,7 @@ textinput.config(yscrollcommand=scrollBar_input.set)
 
 button = tk.Button(frame, bg = '#32CD32', text="Executar", font=(NORM_FONT, 15), command = inputUse)
 button.place(relx=0.85, rely = 0.85, relheight=0.15, relwidth=0.15)
-button = tk.Button(frame, bg = '#FFFF00', text="Verificar", font=(NORM_FONT, 15), command = None)
+button = tk.Button(frame, bg = '#FFFF00', text="Verificar", font=(NORM_FONT, 15), command = verificar)
 button.place(relx=0.85, rely = 0.45, relheight=0.15, relwidth=0.15)
 button = tk.Button(frame, bg = '#FF0000', text="Debug", font=(NORM_FONT, 15), command = lambda: debugButtom(varDebug.get()))
 button.place(relx=0.85, rely = 0, relheight=0.15, relwidth=0.15)
@@ -287,6 +320,7 @@ lower_frame.place(relx=0.53, rely=0.78, relwidth=0.85, relheight=0.2, anchor='n'
 
 label = tk.Text(lower_frame, bg = '#ffffff', font = (NORM_FONT, 15))
 label.place(relwidth=0.80, relheight=1)
+
 
 
 scrollBar = tk.Scrollbar(lower_frame)
