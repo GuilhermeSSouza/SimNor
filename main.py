@@ -117,10 +117,9 @@ def executa(code, wholexer):
     ast, erro = lexerAndParser.toAst(code)
 
   if ast is None:
-    return 'Erro ao criar arquivo de parser, verifique o código fonte \n' + str(erro[-1]) 
+    return 'Erro ao criar arquivo de parser, verifique o código fonte \n' + str(erro[-1])
 
-  
-  print(ast)
+  #print(ast)
 
   errors = analyzer.semanticsCheck(ast)
   #print(errors)
@@ -128,7 +127,7 @@ def executa(code, wholexer):
   if not errors:  
     module = IR.mainFunc(ast, '*')
     #Mostrar codigo em IR
-    print(module)
+    #print(module)
     module = llvm_binder.bind(module, '*', optimize = True)
     return module[1]
   else:    
@@ -163,9 +162,11 @@ def executaVerificar(code, wholexer):
     return '\n' + 'Nenhum erro de sintaxe encontrado! Runtime e Exception não são verificados.'  
     
 
+def execultaDebug(code, wholexer):
+  
+  if wholexer == 2:
+    lexerAndParserL.toAstDebug(code)
+  if wholexer == 1:
+    lexerAndParser.toAstDebug(code)
 
-
-
-
-
-
+  

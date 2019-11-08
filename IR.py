@@ -1058,7 +1058,7 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
                 #18.446.744.073.709.551.616
                 limit = 9223372036854775807
                 
-                print(ast['value'])
+                #print(ast['value'])
 
                 if ast['value'] > limit:
                     raise RuntimeError('Valor acima do suportado: valor overflow')

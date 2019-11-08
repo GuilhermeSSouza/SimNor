@@ -1,0 +1,52 @@
+    lex.py: 924:lex: tokens   = ['lit', 'PLUS', 'Minus', 'Multiply', 'Divide', 'Equal', 'Equality', 'Different', 'LParen', 'RParen', 'LBracket', 'RBracket', 'LSquare', 'RSquare', 'COMMA', 'GLOBID', 'Semicolon', 'If', 'Return', 'While', 'Else', 'Print', 'DEF', 'int', 'void', 'ref', 'noalias', 'EXTERN', 'Array']
+    lex.py: 925:lex: literals = ''
+    lex.py: 926:lex: states   = {'INITIAL': 'inclusive'}
+    lex.py: 953:lex: Adding rule t_Comment -> '\#.*' (state 'INITIAL')
+    lex.py: 953:lex: Adding rule t_lit -> '\d+' (state 'INITIAL')
+    lex.py: 953:lex: Adding rule t_GLOBID -> '[a-zA-Z_][a-zA-Z_0-9]*' (state 'INITIAL')
+    lex.py: 953:lex: Adding rule t_newline -> '\n+' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_PLUS -> '\+' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Multiply -> '\*' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Equality -> '==' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Different -> '!=' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_LParen -> '\(' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_RParen -> '\)' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_LBracket -> '\{' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_RBracket -> '\}' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_LSquare -> '\[' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_RSquare -> '\]' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Minus -> '-' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Divide -> '/' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Equal -> '=' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_COMMA -> ',' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Semicolon -> ';' (state 'INITIAL')
+    lex.py: 966:lex: ==== MASTER REGEXS FOLLOW ====
+    lex.py: 975:lex: state 'INITIAL' : regex[0] = '(?P<t_Comment>\#.*)|(?P<t_lit>\d+)|(?P<t_GLOBID>[a-zA-Z_][a-zA-Z_0-9]*)|(?P<t_newline>\n+)|(?P<t_PLUS>\+)|(?P<t_Multiply>\*)|(?P<t_Equality>==)|(?P<t_Different>!=)|(?P<t_LParen>\()|(?P<t_RParen>\))|(?P<t_LBracket>\{)|(?P<t_RBracket>\})|(?P<t_LSquare>\[)|(?P<t_RSquare>\])|(?P<t_Minus>-)|(?P<t_Divide>/)|(?P<t_Equal>=)|(?P<t_COMMA>,)|(?P<t_Semicolon>;)'
+    lex.py: 924:lex: tokens   = ['lit', 'PLUS', 'Minus', 'Multiply', 'Divide', 'Equal', 'Equality', 'Different', 'lessThan', 'greaterThan', 'EqualLess', 'EqualGreat', 'LParen', 'RParen', 'LBracket', 'RBracket', 'LSquare', 'RSquare', 'COMMA', 'GLOBID', 'Semicolon', 'If', 'Return', 'While', 'Else', 'Print', 'DEF', 'int', 'void', 'ref', 'noalias', 'EXTERN', 'Array']
+    lex.py: 925:lex: literals = ''
+    lex.py: 926:lex: states   = {'INITIAL': 'inclusive'}
+    lex.py: 953:lex: Adding rule t_Comment -> '\#.*' (state 'INITIAL')
+    lex.py: 953:lex: Adding rule t_lit -> '\d+' (state 'INITIAL')
+    lex.py: 953:lex: Adding rule t_GLOBID -> '[a-zA-Z_][a-zA-Z_0-9]*' (state 'INITIAL')
+    lex.py: 953:lex: Adding rule t_newline -> '\n+' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_PLUS -> '\+' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Multiply -> '\*' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Equality -> '==' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Different -> '!=' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_EqualLess -> '<=' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_EqualGreat -> '>=' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_LParen -> '\(' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_RParen -> '\)' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_LBracket -> '\{' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_RBracket -> '\}' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_LSquare -> '\[' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_RSquare -> '\]' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Minus -> '-' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Divide -> '/' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Equal -> '=' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_lessThan -> '<' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_greaterThan -> '>' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_COMMA -> ',' (state 'INITIAL')
+    lex.py: 959:lex: Adding rule t_Semicolon -> ';' (state 'INITIAL')
+    lex.py: 966:lex: ==== MASTER REGEXS FOLLOW ====
+    lex.py: 975:lex: state 'INITIAL' : regex[0] = '(?P<t_Comment>\#.*)|(?P<t_lit>\d+)|(?P<t_GLOBID>[a-zA-Z_][a-zA-Z_0-9]*)|(?P<t_newline>\n+)|(?P<t_PLUS>\+)|(?P<t_Multiply>\*)|(?P<t_Equality>==)|(?P<t_Different>!=)|(?P<t_EqualLess><=)|(?P<t_EqualGreat>>=)|(?P<t_LParen>\()|(?P<t_RParen>\))|(?P<t_LBracket>\{)|(?P<t_RBracket>\})|(?P<t_LSquare>\[)|(?P<t_RSquare>\])|(?P<t_Minus>-)|(?P<t_Divide>/)|(?P<t_Equal>=)|(?P<t_lessThan><)|(?P<t_greaterThan>>)|(?P<t_COMMA>,)|(?P<t_Semicolon>;)'

@@ -1,9 +1,20 @@
 import ply.lex as lex
 import ply.yacc as yacc
 import sys
+import logging
 from constants import *
 
 
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    filename = "parselog.txt",
+    filemode = "w",
+    format = "%(filename)10s:%(lineno)4d:%(message)s"
+)
+log = logging.getLogger()
+
+RealLine = 0
 names ={}
 erro = []
 RESERVED = {
@@ -137,8 +148,8 @@ def t_GLOBID(t):
 # Define a rule so we can track line numbers
 def t_newline(t):
   r'\n+'
-  t.lexer.lineno += len(t.value)
-  pass
+  t.lexer.lineno += t.value.count("\n")
+   
 
 
 # Error handling rule
@@ -148,7 +159,8 @@ def t_error(t):
   t.lexer.skip(1)
 
 # Build the lexer
-lexer = lex.lex()
+lexer = lex.lex(debug=True,debuglog=log)
+
 
 
 #################################################
@@ -441,12 +453,12 @@ precedence = (
 #Sobrescrever yyerror do yacc (a fim de especializar  os erros do parser além - reiliciar ou descartar elementos após erros)
 def p_error(p):
   if p:
-    erro.append("Erro de sintaxe no token (ou no token anterior):  " + p.value)
+    erro.append("Erro de sintaxe no token (ou no token anterior):  " + p.value + str(p.lineno -1))
     #p.lineno = 0
     #print("Erro de sintaxe no token (ou no token anterior):  " + p.value  + str(p.lineno) )
     
   else:
-    erro.append('Erro de sintaxe no EOF')
+    erro.append('Erro de sintaxe EOF: Caixa de codigo fonte vazio')
     #print('Erro de sintaxe no EOF')
 
 ############# helper ############
@@ -463,5 +475,17 @@ def appendByKey(dictonary, key, value):
 def toAst(code):
   parser = yacc.yacc()
   ast = parser.parse(code, debug=False)
-  parser.restart();
+  #parser.restart();
   return ast, erro
+
+
+
+
+
+############# mainDebug ############
+def toAstDebug(code):
+  parser = yacc.yacc(debug=True,debuglog=log)
+  parser.parse(code, debug=log)
+  
+
+

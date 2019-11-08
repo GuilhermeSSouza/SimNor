@@ -1,7 +1,19 @@
 import ply.lex as lex
 import ply.yacc as yacc
 import sys
+import logging
 from constants import *
+
+
+
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    filename = "parselog.txt",
+    filemode = "w",
+    format = "%(filename)10s:%(lineno)4d:%(message)s"
+)
+log = logging.getLogger()
 
 
 names ={}
@@ -148,7 +160,7 @@ def t_error(t):
   t.lexer.skip(1)
 
 # Build the lexer
-lexer = lex.lex()
+lexer = lex.lex(debug=True,debuglog=log)
 
 
 #################################################
@@ -481,3 +493,14 @@ def toAst(code):
   parser = yacc.yacc()
   ast = parser.parse(code, debug=False)
   return ast, erro
+
+
+
+############# mainDebug ############
+def toAstDebug(code):
+  parser = yacc.yacc(debug=True,debuglog=log)
+  parser.parse(code, debug=log)
+  
+
+
+
