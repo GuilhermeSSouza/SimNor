@@ -1,10 +1,12 @@
 #imports
 import tkinter as tk
+import tkinter.ttk as ttk
 from tkinter import *
 from tkinter import filedialog
 from tkinter.ttk import*
 from time import strftime
-#from PIL import Image, ImageTk
+from PIL import Image
+from PIL import ImageTk
 import main
 import webbrowser
 
@@ -12,30 +14,13 @@ import webbrowser
 HEIGHT = 768
 WIDTH = 1366
 
-NORM_FONT= ("Verdana", 10)
-
+NORM_FONT= ("Symbol", 8)
 root = tk.Tk()
-root.title("SimNor 1.0 - Em desenvolvimento")
+root.title("SimNor 1.0")
 root.geometry('1366x768')
 ico = PhotoImage(file = 'post.png')
 root.tk.call('wm', 'iconphoto', root._w, ico)
 
-
-
-# def resize_image(event):
-# 	new_width = event.width
-# 	new_height = event.height
-# 	image = copy_of_image.resize((new_width, new_height))
-# 	photo = ImageTk.PhotoImage(image)
-# 	label.config(image = photo)
-# 	label.image = photo
-
-# image = Image.open('post-nuvem.png')
-# copy_of_image = image.copy()
-# photo = ImageTk.PhotoImage(image)
-# label = Label(root, image = photo)
-# label.bind('<Configure>', resize_image)
-# label.pack(fill=BOTH, expand = YES)
 
 
 canvas = tk.Canvas(root, bg ='#FDF5E6', height=HEIGHT, width=WIDTH)
@@ -52,6 +37,15 @@ var.set(1)
 varDebug = BooleanVar()
 varDebug.set(False)
 
+
+
+
+
+
+
+
+
+# ------------- Functions Interface ----------------------------------------------
 
 def getRadio():
 	selection = '\n  O simulador está usando as Regras Lógicas:  '
@@ -108,30 +102,6 @@ def lerRegraA():
 
 
 
-# def zoom_Mais():
-# 	t = FONT_T.get()
-# 	t += 1
-# 	FONT_T.set(t)
-# 	code = textinput.get("1.0", 'end-1c')
-
-# 	clearCode()
-# 	label = Label(, text = code, font = ('Verdana',FONT_T.get()))
-# 	textinput.insert("end-1c", code)
-# 	label['text'] = FONT_T.get()
-
-# def zoom_Menos():
-# 	t = FONT_T.get()
-# 	t -= 1
-# 	FONT_T.set(t)
-# 	code = textinput.get("1.0", 'end-1c')
-# 	clearCode()
-# 	label = Label(textinput, text = code, font = ('Verdana', FONT_T.get()))
-# 	textinput.insert("end-1c", label)
-# 	label['text'] = label
-	
-
-
-
 def popupmsg(msg):
 	popup = tk.Tk()
 	popup.wm_title("Erro")
@@ -185,6 +155,16 @@ def verificar():
 	execultaSimuldorVerificar(entrada)
 
 
+
+def undo():
+	textinput.event_generate("<<Undo>>")
+	return
+
+def redo():
+	textinput.event_generate("<<Redo>>")
+	return
+
+
 def debug():
 	try:
 		entrada = textinput.get("1.0", 'end-1c')
@@ -197,8 +177,7 @@ def debug():
 		root2 = tk.Tk()
 		root2.title("SimNor 1.01 ")
 		root2.geometry('1366x768')
-		#ico = PhotoImage(file = 'post.png')
-		#root2.tk.call('wm', 'iconphoto', root2._w, ico)
+		
 		canvas = tk.Canvas(root2, bg ='#FDF5E6', height=HEIGHT, width=WIDTH)
 		canvas.pack(expand = YES, fill = BOTH)
 
@@ -216,7 +195,7 @@ def debug():
 
 
 		scrollBar_input1 = tk.Scrollbar(frame1 )
-		scrollBar_input1.place(relx=0.96, rely = 0.01, relwidth=0.03)
+		scrollBar_input1.place(relx=0.96, rely = 0.01, relwidth=0.018)
 
 		scrollBar_input1.config(command=textinput1.yview)
 		textinput1.config(yscrollcommand=scrollBar_input1.set)
@@ -234,12 +213,12 @@ def debug():
 	
 
 
-#creating tkinter window
+
 
 
 
 #creantin Menubar
-menubar = tk.Menu(root, bd='1')
+menubar = tk.Menu(root, bd=2)
 
 
 #Adding file Menu and commands
@@ -253,31 +232,28 @@ icone_docum = PhotoImage(file = 'iconfinder_document.png')
 icone_exit = PhotoImage(file = 'iconfinder_Cancel.png')
 icone_help = PhotoImage(file = 'iconfinder_help.png')
 icone_regras = PhotoImage(file = 'iconfinder_weather.png')
+icone_undo = PhotoImage(file = 'iconfinder_Undo.png')
+icone_redo = PhotoImage(file = 'iconfinder_Redo.png')
+
+
 
 
 
 file = tk.Menu(menubar, tearoff = 0)
-menubar.add_cascade(label = 'FILE', image = icone_docum, compound= tk.LEFT, menu = file, font = NORM_FONT)
-file.add_command(label = 'New File', image = icone_file, compound = tk.LEFT, font = NORM_FONT, command = lambda: clearCode())
-file.add_command(label = 'Open', image = icone_open, compound = tk.LEFT, font = NORM_FONT, command = lambda: openArquivo())
-file.add_command(label = 'Save',  image = icone_save, compound = tk.LEFT,font = NORM_FONT, command = lambda: saveArquivo())
+menubar.add_cascade(label = 'ARQUIVO', compound= tk.LEFT, menu = file, font = NORM_FONT)
+file.add_command(label = 'NOVO ARQUIVO', image = icone_file, compound = tk.LEFT, font = NORM_FONT, command = lambda: clearCode())
+file.add_command(label = 'ABRIR', image = icone_open, compound = tk.LEFT, font = NORM_FONT, command = lambda: openArquivo())
+file.add_command(label = 'SALVAR',  image = icone_save, compound = tk.LEFT,font = NORM_FONT, command = lambda: saveArquivo())
 file.add_separator()
-file.add_command(label = 'Exit', image =icone_exit, compound=tk.LEFT, font = NORM_FONT, command = root.destroy)
+file.add_command(label = 'EXIT', image =icone_exit, compound=tk.LEFT, font = NORM_FONT, command = root.destroy)
 
 
 
 #Adding Regras 
 regra = tk.Menu(menubar, tearoff = 0)
-menubar.add_cascade(label ='REGRAS', image=icone_regras, compound=tk.LEFT, menu = regra, font = NORM_FONT)
-regra.add_command(label = 'R. Avançadas', font = NORM_FONT ,command = lambda: lerRegraA())
-regra.add_command(label = 'R. Básicas', font = NORM_FONT, command = lambda: lerRegraB())
-
-
-#Adding Zoom +
-# Zoom_1 = tk.Menu(menubar, tearoff = 0)
-# menubar.add_cascade(label = 'Zoom', font = NORM_FONT,  menu = Zoom_1)
-# Zoom_1.add_command(label = 'Zoom +', font = NORM_FONT, command = lambda: zoom_Mais())
-# Zoom_1.add_command(label = 'Zoom -', font = NORM_FONT, command = lambda: zoom_Menos())
+menubar.add_cascade(label ='REGRAS', compound=tk.LEFT, menu = regra, font = NORM_FONT)
+regra.add_command(label = 'R. AVANÇADA', font = NORM_FONT ,command = lambda: lerRegraA())
+regra.add_command(label = 'R. BÁSICA', font = NORM_FONT, command = lambda: lerRegraB())
 
 
 
@@ -285,11 +261,11 @@ regra.add_command(label = 'R. Básicas', font = NORM_FONT, command = lambda: ler
 #Adding Help Menu and commands
 
 help_ = tk.Menu(menubar, tearoff = 0)
-menubar.add_cascade(label = 'AJUDA', image=icone_help, compound=tk.LEFT, font = NORM_FONT,  menu = help_)
-help_.add_command(label = 'Sintaxe', font = NORM_FONT,  command = lambda: webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/wiki/Sintaxe---SIMNOR'))
-help_.add_command(label = 'Exemplos', font = NORM_FONT, command = lambda : webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/wiki/Exemplos'))
+menubar.add_cascade(label = 'AJUDA', compound=tk.LEFT, font = NORM_FONT,  menu = help_)
+help_.add_command(label = 'SINTAXE', font = NORM_FONT,  command = lambda: webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/wiki/Sintaxe---SIMNOR'))
+help_.add_command(label = 'EXEMPLOS', font = NORM_FONT, command = lambda : webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/wiki/Exemplos'))
 help_.add_separator()
-help_.add_command(label = 'Issues/Git',  image = icone_git, compound = tk.LEFT, command = lambda : webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/issues'))
+help_.add_command(label = 'ISSUES/GIT',  image = icone_git, compound = tk.LEFT, command = lambda : webbrowser.open('https://github.com/GuilhermeSSouza/SimNor/issues'))
 
 
 #__________________________________________________________________________________________________________
@@ -298,18 +274,27 @@ help_.add_command(label = 'Issues/Git',  image = icone_git, compound = tk.LEFT, 
 
 
 
-menubar.add_command(label= '            ')
 
 
-icone_exec = PhotoImage(file = 'iconfinder_15.png')
-icone_verifica = PhotoImage(file = 'iconfinder_slice.png')
-icone_bug = PhotoImage(file='iconfinder_bug-spider.png')
-menubar.add_command(label= 'Verificar'  ,compound = tk.LEFT, image =icone_verifica,command=verificar)
 
-menubar.add_command(label= 'Executar', compound = tk.LEFT, image =icone_exec, command=inputUse)
+icone_exec = PhotoImage(file = 'iconfinder_play.png')
+icone_verifica = PhotoImage(file = 'iconfinder_ok.png')
+icone_bug = PhotoImage(file='iconfinder_bug.png')
+icone_broom = PhotoImage(file='broom-icon.png')
+#img = Image.open("iconfinder_broom.png")
+#img = img.resize((32,32), Image.ANTIALIAS)
+#photoImg =  ImageTk.PhotoImage(img)
 
-menubar.add_command(label='Debug',compound = tk.LEFT, image =icone_bug, command=debug)
 
+
+
+menubar.add_command(image= icone_undo, command= undo)
+menubar.add_command(image = icone_redo, command= redo)
+menubar.add_command(label ='MAIN',compound=tk.LEFT, font=NORM_FONT, image = icone_broom, command= clear_lower)
+menubar.add_command(label= '                             ', state = DISABLED)
+menubar.add_command(label= 'VERIFICAR'  , font= NORM_FONT, compound = tk.LEFT, image =icone_verifica,command=verificar)
+menubar.add_command(label= 'EXECUTAR', font= NORM_FONT, compound = tk.LEFT, image =icone_exec, command=inputUse)
+menubar.add_command(label='DEBUG',font= NORM_FONT, compound = tk.LEFT, image =icone_bug, command=debug)
 
 #___________________________________________________________
 
@@ -319,7 +304,17 @@ menubar.add_command(label='Debug',compound = tk.LEFT, image =icone_bug, command=
 
 
 
-label2 = tk.Label(root, text = " CÓDIGO-FONTE ", bg='#FDF5E9')
+
+
+
+
+
+
+
+
+
+
+label2 = tk.Label(root, text = " CÓDIGO-FONTE ", font =("Symbol", 12), bg='#FDF5E9')
 label2.place(relx=0.40, rely=0.008)
 
 
@@ -327,7 +322,7 @@ label2.place(relx=0.40, rely=0.008)
 #label4.place(relx=0.0, rely=0.745)
 
 
-label2 = tk.Label(root, text = " RESULTADO MAIN", bg='#FDF5E9')
+label2 = tk.Label(root, text = " RESULTADO MAIN",  font =("Symbol", 12), bg='#FDF5E9')
 label2.place(relx=0.40, rely=0.75)
 
 
@@ -340,19 +335,18 @@ frame.place(relx=0.53, rely=0.03, relwidth=0.85, relheight=0.7, anchor='n')
 
 
 
-#background_image = tk.PhotoImage(file="post-nuvem.png")
-#background_label = tk.Label(canvas, image=background_image)
-#background_label.place(relwidth=0, relheight=0)
-
-
+sty = ttk.Style()
+sty.configure('Wild.TRadiobutton',    # First argument is the name of style. Needs to end with: .TRadiobutton
+        background='#FDF5E9',         # Setting background to our specified color above
+        foreground='black')
 
 
 #RadioButtom
-R2 = Radiobutton(root, text="R. Avançada", variable=var, value=2, command=getRadio)
+R2 = Radiobutton(root, text="R. AVANÇADA",  variable=var, value=2, command=getRadio, style = 'Wild.TRadiobutton')
 R2.place(relx = 0.01, rely = 0.04, anchor = NW )
 
 
-R1 = Radiobutton(root,text="R. Básica", variable=var, value=1, command=getRadio)
+R1 = Radiobutton(root,text="R. BÁSICA", variable=var, value=1, command=getRadio, style = 'Wild.TRadiobutton')
 R1.place(relx = 0.01, rely = 0.08, anchor = NW )
 
 
@@ -367,11 +361,14 @@ R1.place(relx = 0.01, rely = 0.08, anchor = NW )
 
 #Input text code
 
-textinput = tk.Text(frame, font=(NORM_FONT, 15), undo=True)
-textinput.place(relwidth=0.80, relheight=1)
+textinput = tk.Text(frame, font=(NORM_FONT, 15), undo=True, autoseparators=True, maxundo=-1)
+textinput.place(relwidth=0.96, relheight=1)
+
+
+
 
 scrollBar_input = tk.Scrollbar(frame)
-scrollBar_input.place(relx=0.81, rely = 0.01, relwidth=0.03)
+scrollBar_input.place(relx=0.97, rely = 0, relwidth=0.018)
 
 scrollBar_input.config(command=textinput.yview)
 textinput.config(yscrollcommand=scrollBar_input.set)
@@ -395,24 +392,20 @@ lower_frame = tk.Frame(root, bg='#FDF5E9', bd=3)
 lower_frame.place(relx=0.53, rely=0.78, relwidth=0.85, relheight=0.2, anchor='n')
 
 label = tk.Text(lower_frame, bg = '#ffffff', font = (NORM_FONT, 15))
-label.place(relwidth=0.80, relheight=1)
+label.place(relwidth=0.96, relheight=1)
 
 
 
 scrollBar = tk.Scrollbar(lower_frame)
-scrollBar.place(relx=0.81, rely = 0.01, relwidth=0.03)
+scrollBar.place(relx=0.97, rely = 0.01, relwidth=0.018)
 
 scrollBar.config(command=label.yview)
 label.config(yscrollcommand=scrollBar.set)
 
 
 
-button = tk.Button(lower_frame, bg = '#BDB76B', text="Limpar main", font=(NORM_FONT, 15), command = lambda: clear_lower())
-button.place(relx=0.85, rely = 0.45, relheight=0.55, relwidth=0.15)
-
-
-
-
+#button = tk.Button(lower_frame, bg = '#BDB76B', text="Limpar main", font=(NORM_FONT, 15), command = lambda: clear_lower())
+#button.place(relx=0.85, rely = 0.45, relheight=0.55, relwidth=0.15)
 
 
 root.config(menu = menubar)
