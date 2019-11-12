@@ -18,7 +18,7 @@ NORM_FONT= ("Symbol", 8)
 root = tk.Tk()
 root.title("SimNor 1.0")
 root.geometry('1366x768')
-ico = PhotoImage(file = 'post.png')
+ico = PhotoImage(file = 'icones/post.png')
 root.tk.call('wm', 'iconphoto', root._w, ico)
 
 
@@ -175,9 +175,11 @@ def debug():
 
 
 		root2 = tk.Tk()
-		root2.title("SimNor 1.01 ")
+		root2.title("SimNor 1.0")
 		root2.geometry('1366x768')
 		
+		ico2 = PhotoImage(file = 'post.png')
+		root2.tk.call('wm', 'iconphoto', root2._w, ico2)
 		canvas = tk.Canvas(root2, bg ='#FDF5E6', height=HEIGHT, width=WIDTH)
 		canvas.pack(expand = YES, fill = BOTH)
 
@@ -224,16 +226,16 @@ menubar = tk.Menu(root, bd=2)
 #Adding file Menu and commands
 
 
-icone_file = PhotoImage(file = 'iconfinder_file-code.png')
-icone_open = PhotoImage(file = 'iconfinder_open-file.png')
-icone_save = PhotoImage(file = 'iconfinder_floppy.png')
-icone_git = PhotoImage(file = 'iconfinder_github.png')
-icone_docum = PhotoImage(file = 'iconfinder_document.png')
-icone_exit = PhotoImage(file = 'iconfinder_Cancel.png')
-icone_help = PhotoImage(file = 'iconfinder_help.png')
-icone_regras = PhotoImage(file = 'iconfinder_weather.png')
-icone_undo = PhotoImage(file = 'iconfinder_Undo.png')
-icone_redo = PhotoImage(file = 'iconfinder_Redo.png')
+icone_file = PhotoImage(file = 'icones/iconfinder_file-code.png')
+icone_open = PhotoImage(file = 'icones/iconfinder_open-file.png')
+icone_save = PhotoImage(file = 'icones/iconfinder_floppy.png')
+icone_git = PhotoImage(file = 'icones/iconfinder_github.png')
+icone_docum = PhotoImage(file = 'icones/iconfinder_document.png')
+icone_exit = PhotoImage(file = 'icones/iconfinder_Cancel.png')
+icone_help = PhotoImage(file = 'icones/iconfinder_help.png')
+icone_regras = PhotoImage(file = 'icones/iconfinder_weather.png')
+icone_undo = PhotoImage(file = 'icones/iconfinder_Undo.png')
+icone_redo = PhotoImage(file = 'icones/iconfinder_Redo.png')
 
 
 
@@ -277,10 +279,10 @@ help_.add_command(label = 'ISSUES/GIT',  image = icone_git, compound = tk.LEFT, 
 
 
 
-icone_exec = PhotoImage(file = 'iconfinder_play.png')
-icone_verifica = PhotoImage(file = 'iconfinder_ok.png')
-icone_bug = PhotoImage(file='iconfinder_bug.png')
-icone_broom = PhotoImage(file='broom-icon.png')
+icone_exec = PhotoImage(file = 'icones/iconfinder_play.png')
+icone_verifica = PhotoImage(file = 'icones/iconfinder_ok.png')
+icone_bug = PhotoImage(file='icones/iconfinder_bug.png')
+icone_broom = PhotoImage(file='icones/broom-icon.png')
 #img = Image.open("iconfinder_broom.png")
 #img = img.resize((32,32), Image.ANTIALIAS)
 #photoImg =  ImageTk.PhotoImage(img)

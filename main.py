@@ -116,6 +116,7 @@ def executa(code, wholexer):
   if wholexer == 1:
     ast, erro = lexerAndParser.toAst(code)
 
+  
   if ast is None:
     return 'Erro ao criar arquivo de parser, verifique o código fonte \n' + str(erro[-1])
 

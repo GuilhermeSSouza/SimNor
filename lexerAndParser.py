@@ -14,7 +14,7 @@ logging.basicConfig(
 )
 log = logging.getLogger()
 
-RealLine = 0
+
 names ={}
 erro = []
 RESERVED = {
@@ -163,11 +163,9 @@ lexer = lex.lex(debug=True,debuglog=log)
 
 
 
-#################################################
-#                  parsing                      #
-#################################################
 
-############### prog ##############
+############################PARSER######################################
+
 def p_prog(p):
   '''prog : funcs
           | externs funcs'''
@@ -453,7 +451,7 @@ precedence = (
 #Sobrescrever yyerror do yacc (a fim de especializar  os erros do parser além - reiliciar ou descartar elementos após erros)
 def p_error(p):
   if p:
-    erro.append("Erro de sintaxe no token (ou no token anterior):  " + p.value + str(p.lineno -1))
+    erro.append("Erro de sintaxe no token (ou no token anterior):  " + p.value )
     #p.lineno = 0
     #print("Erro de sintaxe no token (ou no token anterior):  " + p.value  + str(p.lineno) )
     
