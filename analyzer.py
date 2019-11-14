@@ -137,13 +137,13 @@ def stmtRecurs(stmt, k_functions, knownVariables, errors):
         knownVariables[vdecl['var']] = vdecl['type']
     if stmt['name'] in ['blk', 'while']:
         stmt['knownVariables'] = copy.deepcopy(knownVariables)
-        blkRecurs(stmt, k_functions)
+        blkRecurs(stmt, k_functions, errors)
     elif stmt['name'] in ['if']:
         stmt['stmt']['knownVariables'] = copy.deepcopy(knownVariables)
-        stmtRecurs(stmt['stmt'], k_functions, knownVariables)
+        stmtRecurs(stmt['stmt'], k_functions, knownVariables, errors)
         if 'else_stmt' in stmt:
             stmt['else_stmt']['knownVariables'] = copy.deepcopy(knownVariables)
-            stmtRecurs(stmt['else_stmt'], k_functions, knownVariables)
+            stmtRecurs(stmt['else_stmt'], k_functions, knownVariables, errors)
 
     if 'cond' in stmt:
         recurs2(stmt['cond'], knownVariables, k_functions, errors)
@@ -174,9 +174,6 @@ def recurs2(exp, knownVars, k_functions, errors):
         for i in exp:
             recurs2(exp, knownVars, k_functions, errors)
 
-    #if exp['name'] == 'slit':
-     #  exp['type'] = 'slit'
-      # return 'slit'
 
     if 'assign' == exp['name']:
 
@@ -204,10 +201,6 @@ def recurs2(exp, knownVars, k_functions, errors):
             recurs2(paramExp, knownVars, k_functions, errors)
         return exp['type']
 
-    # this should take care of logical negations
-    #if exp['name'] == 'uop':
-    #   exp['type'] = recurs2(exp['exp'], knownVars, k_functions)
-    #   return exp['type']
 
     if exp["name"] == "binop":
         if 'type' not in exp['lhs']:
@@ -228,16 +221,5 @@ def calculateType(lhs, rhs):
         lhs['type'] = 'int'
         rhs['type'] = 'int'
         return 'int'
-    # elif lhs['type'] == 'sfloat' or rhs['type'] == 'sfloat':
-    #     lhs['type'] = 'sfloat'
-    #     rhs['type'] = 'sfloat'
-    #     return 'sfloat'
-    # elif lhs['type'] == 'float' or rhs['type'] == 'float':
-    #     lhs['type'] = 'float'
-    #     rhs['type'] = 'float'
-    #     return 'float'
-    # elif lhs['type'] == 'cint' or rhs['type'] == 'cint':
-    #     lhs['type'] = 'cint'
-    #     rhs['type'] = 'cint'
-    #     return 'cint'
+   
     return "undefined"

@@ -1,0 +1,19 @@
+
+
+#Func que realiza a soma
+def int func(int a, int b){
+
+return a+b;
+
+}
+
+
+
+#Recebe a soma de dois elementos passados para func
+def int main(){
+
+int a =2;
+int b =3;
+int c = func(a,b);
+return c;
+}

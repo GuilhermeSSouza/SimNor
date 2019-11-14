@@ -1,3 +1,21 @@
+####################################################################################################################
+#
+#
+#			SIMULADOR DE MÁQUINA NORMA
+#
+#Desenvolvido por: guilthys@gmail.com
+#Trabalho de TCC - ES - Unipampa/Alegrete 2019
+#
+#
+#Esse Codigo  não tem restrições de uso - Desenvolvido com fins academicos e de Ensino
+#
+# Sinta-se livre para altera a sintaxe, as funcionalidades, e que isso sirva a seu aprendizado.
+# Existem limitações e cenarrios não testado(Explorar todos é inviavel devido a tempo),
+# portanto erros podem ocorrer durate sua utilização
+####################################################################################################################
+
+
+
 #imports
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -283,10 +301,6 @@ icone_exec = PhotoImage(file = 'icones/iconfinder_play.png')
 icone_verifica = PhotoImage(file = 'icones/iconfinder_ok.png')
 icone_bug = PhotoImage(file='icones/iconfinder_bug.png')
 icone_broom = PhotoImage(file='icones/broom-icon.png')
-#img = Image.open("iconfinder_broom.png")
-#img = img.resize((32,32), Image.ANTIALIAS)
-#photoImg =  ImageTk.PhotoImage(img)
-
 
 
 
@@ -340,16 +354,18 @@ frame.place(relx=0.53, rely=0.03, relwidth=0.85, relheight=0.7, anchor='n')
 sty = ttk.Style()
 sty.configure('Wild.TRadiobutton',    # First argument is the name of style. Needs to end with: .TRadiobutton
         background='#FDF5E9',         # Setting background to our specified color above
-        foreground='black')
+        foreground='black',
+        font = ("Symbol", 8)
+        )
 
 
 #RadioButtom
-R2 = Radiobutton(root, text="R. AVANÇADA",  variable=var, value=2, command=getRadio, style = 'Wild.TRadiobutton')
-R2.place(relx = 0.01, rely = 0.04, anchor = NW )
+R2 = Radiobutton(root, text="R.AVANÇADA",  variable=var, value=2, command=getRadio, style = 'Wild.TRadiobutton')
+R2.place(relx = 0, rely = 0.04, anchor = NW)
 
 
-R1 = Radiobutton(root,text="R. BÁSICA", variable=var, value=1, command=getRadio, style = 'Wild.TRadiobutton')
-R1.place(relx = 0.01, rely = 0.08, anchor = NW )
+R1 = Radiobutton(root,text="R.BÁSICA", variable=var, value=1, command=getRadio, style = 'Wild.TRadiobutton')
+R1.place(relx = 0, rely = 0.08, anchor = NW )
 
 
 
@@ -363,7 +379,7 @@ R1.place(relx = 0.01, rely = 0.08, anchor = NW )
 
 #Input text code
 
-textinput = tk.Text(frame, font=(NORM_FONT, 15), undo=True, autoseparators=True, maxundo=-1)
+textinput = tk.Text(frame, font=("Times", "17", "bold italic"), undo=True, autoseparators=True, maxundo=-1)
 textinput.place(relwidth=0.96, relheight=1)
 
 
@@ -374,18 +390,6 @@ scrollBar_input.place(relx=0.97, rely = 0, relwidth=0.018)
 
 scrollBar_input.config(command=textinput.yview)
 textinput.config(yscrollcommand=scrollBar_input.set)
-
-
-
-#main buutoms simulador
-
-#button = tk.Button(frame, bg = '#32CD32', text="Executar", font=(NORM_FONT, 15), command = inputUse)
-#button.place(relx=0.85, rely = 0.85, relheight=0.15, relwidth=0.15)
-#button = tk.Button(frame, bg = '#FFFF00', text="Verificar", font=(NORM_FONT, 15), command = verificar)
-#button.place(relx=0.85, rely = 0.45, relheight=0.15, relwidth=0.15)
-#button = tk.Button(frame, bg = '#FF0000', text="Debug", font=(NORM_FONT, 15), command = debug)
-#button.place(relx=0.85, rely = 0, relheight=0.15, relwidth=0.15)
-
 
 
 
@@ -404,10 +408,6 @@ scrollBar.place(relx=0.97, rely = 0.01, relwidth=0.018)
 scrollBar.config(command=label.yview)
 label.config(yscrollcommand=scrollBar.set)
 
-
-
-#button = tk.Button(lower_frame, bg = '#BDB76B', text="Limpar main", font=(NORM_FONT, 15), command = lambda: clear_lower())
-#button.place(relx=0.85, rely = 0.45, relheight=0.55, relwidth=0.15)
 
 
 root.config(menu = menubar)

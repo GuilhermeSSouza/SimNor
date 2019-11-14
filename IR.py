@@ -284,7 +284,8 @@ def arrayOpera(ast, builder, symblos):
                 new_value_index = builder.add(array_i_value, valor_somado, name="add")
                 builder.store(new_value_index, array_poiter)
             else:
-                array_example =[0,0,0,0,0,0,0,0,0,0]
+                array_example =[0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 #print(array_example)
                 array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
                 arr = ir.Constant(array_type, array_example)
@@ -314,7 +315,8 @@ def arrayOpera(ast, builder, symblos):
                 new_value_index = builder.add(array_i_value, valor_somado, name="add")
                 builder.store(new_value_index, array_poiter)
             else:
-                array_example =[0,0,0,0,0,0,0,0,0,0]
+                array_example =[0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 #print(array_example)
                 array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
                 arr = ir.Constant(array_type, array_example)
@@ -343,7 +345,8 @@ def arrayOpera(ast, builder, symblos):
                 new_value_index = builder.sub(array_i_value, valor_somado, name="sub")
                 builder.store(new_value_index, array_poiter)
             else:
-                array_example =[0,0,0,0,0,0,0,0,0,0]
+                array_example =[0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 #print(array_example)
                 array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
                 arr = ir.Constant(array_type, array_example)
@@ -369,7 +372,8 @@ def arrayOpera(ast, builder, symblos):
                 new_value_index = builder.sub(array_i_value, valor_somado, name="sub")
                 builder.store(new_value_index, array_poiter)
             else:
-                array_example =[0,0,0,0,0,0,0,0,0,0]
+                array_example =[0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 #print(array_example)
                 array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
                 arr = ir.Constant(array_type, array_example)
@@ -398,7 +402,16 @@ def array(ast, builder, symbols):
 
         else:
 
-            array_example =[0,0,0,0,0,0,0,0,0,0]
+            array_example =[0,0,0,0,0,0,0,0,0,0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             #print(array_example)
             array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
             arr = ir.Constant(array_type, array_example)
@@ -413,13 +426,22 @@ def array(ast, builder, symbols):
 
 
 
-        i32_100 = ir.Constant(i32, 10)
+        i32_100 = ir.Constant(i32, 100)
         i32_0 = ir.Constant(i32, 0)
         i32_1 = ir.Constant(i32, 1)
         
-        array_prime = [2,3,5,7,11,13,17,19,23,31]
+        array_prime = [2,3,5,7,11,13,17,19,23,31,
+        37,41,43,47,53,59,61,67,71,73,
+        79,83,97,101,103,107,109,113,127,131,
+        137,139,149,151,157,163,167,173,179,181,
+        191,193,197,199,211,223,227,229,233,239,
+        241,251,257,263,269,271,277,281,283,293,
+        307,311,313,317,331,337,347,349,353,359,
+        367,373,379,383,389,397,401,409,419,421,
+        431,433,439,443,449,457,461,463,467,479,
+        487,491,499,503,509,521,523,523,541,547]
 
-        array_type = ir.ArrayType(i32, 10)
+        array_type = ir.ArrayType(i32, 100)
         arr = ir.Constant(array_type, array_prime)
         ptr = builder.alloca(array_type)
         builder.store(arr, ptr)
@@ -571,8 +593,8 @@ def array(ast, builder, symbols):
             var_recebe = symbols[ast[c.var]] 
             builder.store(valor_stored, var_recebe)
         else:
-            array_example = array_example =[0,0,0,0,0,0,0,0,0,0] #, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
- #0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            array_example = array_example =[0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             #print(array_example)
             array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
             arr = ir.Constant(array_type, array_example)
@@ -612,8 +634,8 @@ def array(ast, builder, symbols):
             valor_stored = builder.load(address)
             builder.store(valor_stored, var_name)
         else:
-            array_example =[0,0,0,0,0,0,0,0,0,0] #, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
- #0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            array_example =[0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             
             #array_example = [3,5,8]
             array_type = ir.ArrayType(i32, len(array_example)) #According to documentation, the second argument has to be an Python Integer. It can't be ir.Constant(i32, 3) for example.
@@ -832,37 +854,13 @@ def binop(ast, symbols, builder, target_type, cint = False):
 
     # Codigo sequindo tutoriais na net 
 
-    # if lhs.type != i1 and rhs.type != i1:
-    #     if op != "logAnd" and op != "logOr":
-    #         # if "float" in exp_type:
-    #         #     if lhs.type != f32:
-    #         #         lhs = builder.uitofp(lhs, f32)
-    #         #     if rhs.type != f32:
-    #         #         rhs = builder.uitofp(rhs, f32)
-
-    #         if "int" in exp_type:
-    #             if lhs.type != i32:
-    #                 lhs = builder.fptosi(lhs, i32)
-    #             if rhs.type != i32:
-    #                 rhs = builder.fptosi(rhs, i32)
 
     flags = list()
     if "float" == target_type:
         flags= ["fast"]
 
     try:
-        # if op == "logAnd":
-        #     if lhs.type != rhs.type:
-        #         lhs = binary_convert(builder, lhs)
-        #         rhs = binary_convert(builder, rhs)
-        #     return builder.and_(lhs, rhs, name="logAnd", flags = flags)
-        # elif op == "logOr":
-        #     if lhs.type != rhs.type:
-        #         lhs = binary_convert(builder, lhs)
-        #         rhs = binary_convert(builder, rhs)
-        #     return builder.or_(lhs, rhs, name="logOr", flags = flags)
-        # elif cint:
-        #     return check_int(lhs, rhs, builder, op)
+        
         if "int" in exp_type:
             if op == 'mul':
                 return builder.mul(lhs, rhs, name='mul')
@@ -913,98 +911,12 @@ def binop(ast, symbols, builder, target_type, cint = False):
                 return builder.icmp_signed('<=', lhs, rhs, name="el")
             elif op == 'lg':
                 return builder.icmp_signed('>=', lhs, rhs, name = "lg")
-        # elif "float" in exp_type:
-        #     if op == 'mul':
-        #         return builder.fmul(lhs, rhs, name='mul', flags = flags)
-        #     elif op == 'div':
-        #         return builder.fdiv(lhs, rhs, name='div', flags = flags)
-        #     elif op == 'add':
-        #         return builder.fadd(lhs, rhs, name="add", flags = flags)
-        #     elif op == 'sub':
-        #         return builder.fsub(lhs, rhs, name='sub', flags = flags)
-        #     elif op == 'eq':
-        #         return builder.fcmp_ordered('==', lhs, rhs, name="eq", flags = flags)
-        #     elif op == 'lt':
-        #         return builder.fcmp_ordered('<', lhs, rhs, name="lt", flags = flags)
-        #     elif op == 'gt':
-        #         return builder.fcmp_ordered('>', lhs, rhs, name="gt", flags = flags)
+        
     except ValueError as err:
         raise RuntimeError('Erro ao pocessar a operação:  ' + str(ast) + '  ' + str(err))
     except AttributeError as err: 
         raise RuntimeError('Erro ao processar a operação:  ' + str(ast)+ '  ' + str(err))
 
-# def check_int(lhs, rhs, builder, op):
-#     result = None
-#     if op == 'mul':
-#         result = builder.smul_with_overflow(lhs, rhs, name='mul')
-#     elif op == 'div':
-#         # rhs = builder.uitofp(rhs, f32)
-#         # rhs = builder.fdiv(ir.Constant(f32, 1), rhs, name="div")
-#         # return check_int(lhs, rhs, builder, 'mul')
-
-#         a = builder.sdiv(lhs, rhs, name='div')
-
-#         l = builder.icmp_signed('==', lhs, ir.Constant(i32,-2147483648 ), name="eq")
-#         r = builder.icmp_signed('!=', rhs, ir.Constant(i32,-1), name="nq")
-#         cond = builder.mul(l, r, name='mul')
-
-#         with builder.if_else(cond) as (then, otherwise):
-#             with then:
-#                 pass
-#             with otherwise:
-#                 lhs = check_int(lhs, ir.Constant(i32, -1), builder, 'mul')
-#                 rhs = check_int(rhs, ir.Constant(i32, -1), builder, 'mul')
-#         return a
-
-#     elif op == 'add':
-#         result = builder.sadd_with_overflow(lhs, rhs, name="add")
-#     elif op == 'sub':
-#         result = builder.ssub_with_overflow(lhs, rhs, name='sub')
-    
-#     if result is not None:
-#         is_overflow = builder.extract_value(result, 1)
-
-#         with builder.if_then(is_overflow):
-#             overflows(None, builder)
-
-
-#         return builder.extract_value(result, 0)
-
-
-#     if op == 'eq':
-#         return builder.icmp_signed('==', lhs, rhs, name="eq")
-#     elif op == 'df':
-#         return builder.icmp_signed('!=', lhs, rhs, name="df")
-#     elif op == 'lt':
-#         return builder.icmp_signed('<', lhs, rhs, name="lt")
-#     elif op == 'gt':
-#         return builder.icmp_signed('>', lhs, rhs, name="gt")
-#     elif op == 'el':
-#         return builder.icmp_signed('<=', lhs, rhs, name="el")
-#     elif op == 'lg':
-#         return builder.icmp_signed('>=', lhs, rhs, name="lg")
-
-
-
-# def uop(ast, symbols, builder, cint=False):
-#     try:
-#         uop_value = expression(ast["exp"], symbols, builder, cint, neg=True, exception=True)
-#     except Error2147483648:
-#         return ir.Constant(i32, -2147483648)
-#     if uop_value.type.is_pointer:
-#         uop_value = builder.load(uop_value)
-#     if ast["uopType"] == "Minus":
-#         if uop_value.type == i32:
-#             if cint:
-#                 is_overflow = builder.icmp_signed('==', uop_value, ir.Constant(i32, -2147483648))
-#                 with builder.if_then(is_overflow):
-#                     overflows(None, builder)
-#             return builder.neg(uop_value, name="Minus")
-#         else:
-#             f32_0 = ir.Constant(f32, 0)
-#             return builder.fsub(f32_0, uop_value, name='sub', flags = ["fast"])
-#     else:
-#         return builder.not_(uop_value, name="logicalNeg")
 
 
 def deference(builder, p):
@@ -1017,24 +929,6 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
     name = ast[c.name]
     
     try:
-        #Ok, falta pegar o index do vetor base definido qdo se cria cada registrador
-        #if name == c.ret_index:
-         #   return ir.Constant(to_ir_type(ast['type']), ast['value'])
-
-
-
-
-
-
-
-            
-        #if name == c.uop:
-           # return uop(ast, symbols, builder, cint)
-
-
-           #Refatorar essa parte e criar o overflow ou 
-
-
 
         if name == 'lit':
               #18.446.744.073.709.551.616
@@ -1068,9 +962,7 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
 
             r = ir.Constant(to_ir_type(ast['type']), ast['value'])
             return r
-        #if name == c.slitExp:
-         #   return ast["value"]
-            #raise RuntimeError('slit should never hit here')
+        
         if name == c.varExp:
             id = ast[c.var]
             try:
