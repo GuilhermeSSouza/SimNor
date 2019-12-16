@@ -34,7 +34,7 @@ WIDTH = 1366
 
 NORM_FONT= ("Symbol", 8)
 root = tk.Tk()
-root.title("SimNor 1.0")
+root.title("SiNo 1.0")
 root.geometry('1366x768')
 ico = PhotoImage(file = 'icones/post.png')
 root.tk.call('wm', 'iconphoto', root._w, ico)
@@ -68,9 +68,9 @@ varDebug.set(False)
 def getRadio():
 	selection = '\n  O simulador está usando as Regras Lógicas:  '
 	if var.get() == 1: 
-		selection += ' Básicas.'
+		selection += '  Básicas.'
 	else: 
-		selection += ' Avançadas.'
+		selection += '  Avançadas.'
 	label.insert("end-1c", selection)
 
 
@@ -149,22 +149,22 @@ def inputUse():
 
 def execultaSimuldor(code):
 	try:
-		result = ' \n ************************************* SimNor ************************************* \n'  + '>>Return main::  '+ str(main.executa(code, var.get()))
+		result = ' \n '  + '>>Return main::  '+ str(main.executa(code, var.get()))
 		label.insert("end-1c", result)
 	except RuntimeError as e:
-		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
+		label.insert("end-1c", ' \n '+ '>>Return main::  ' +str(e))
 	except Exception as e:
-		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
+		label.insert("end-1c", ' \n '+ '>>Return main::  ' +str(e))
 
 
 def execultaSimuldorVerificar(code):
 	try:
-		result = ' \n ************************************* SimNor ************************************* \n'  + '>>Return main::  '+ str(main.executaVerificar(code, var.get()))
+		result = ' \n '  + '>>Return main::  '+ str(main.executaVerificar(code, var.get()))
 		label.insert("end-1c", result)
 	except RuntimeError as e:
-		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
+		label.insert("end-1c", ' \n  '+ '>>Return main::  ' +str(e))
 	except Exception as e:
-		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
+		label.insert("end-1c", ' \n  '+ '>>Return main::  ' +str(e))
 
 
 
@@ -193,11 +193,11 @@ def debug():
 
 
 		root2 = tk.Tk()
-		root2.title("SimNor 1.0")
+		root2.title("SiNo 1.0")
 		root2.geometry('1366x768')
 		
-		ico2 = PhotoImage(file = 'post.png')
-		root2.tk.call('wm', 'iconphoto', root2._w, ico2)
+		#ico2 = PhotoImage(file = 'icones/post.png')
+		#root2.tk.call('wm', 'iconphoto', root2._w, ico2)
 		canvas = tk.Canvas(root2, bg ='#FDF5E6', height=HEIGHT, width=WIDTH)
 		canvas.pack(expand = YES, fill = BOTH)
 
@@ -228,7 +228,7 @@ def debug():
 
 		
 	except Exception as e:
-		label.insert("end-1c", ' \n ************************************* SimNor ************************************* \n'+ '>>Return main::  ' +str(e))
+		label.insert("end-1c", ' \n ************************************* SiNo ************************************* \n'+ '>>Return main::  ' +str(e))
 
 	
 
@@ -306,7 +306,7 @@ icone_broom = PhotoImage(file='icones/broom-icon.png')
 
 menubar.add_command(image= icone_undo, command= undo)
 menubar.add_command(image = icone_redo, command= redo)
-menubar.add_command(label ='MAIN',compound=tk.LEFT, font=NORM_FONT, image = icone_broom, command= clear_lower)
+menubar.add_command(label ='RESULTADO MAIN',compound=tk.LEFT, font=NORM_FONT, image = icone_broom, command= clear_lower)
 menubar.add_command(label= '                             ', state = DISABLED)
 menubar.add_command(label= 'VERIFICAR'  , font= NORM_FONT, compound = tk.LEFT, image =icone_verifica,command=verificar)
 menubar.add_command(label= 'EXECUTAR', font= NORM_FONT, compound = tk.LEFT, image =icone_exec, command=inputUse)
@@ -330,8 +330,8 @@ menubar.add_command(label='DEBUG',font= NORM_FONT, compound = tk.LEFT, image =ic
 
 
 
-label2 = tk.Label(root, text = " CÓDIGO-FONTE ", font =("Symbol", 12), bg='#FDF5E9')
-label2.place(relx=0.40, rely=0.008)
+label2 = tk.Label(root, text = " CÓDIGO-FONTE ", font =("Symbol", 10), bg='#FDF5E9')
+label2.place(relx=0.40, rely=0.007)
 
 
 #label4 = tk.Label(root, text = "______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________", bg='#FDF5E9')
@@ -343,7 +343,7 @@ label2.place(relx=0.40, rely=0.75)
 
 
 
-label3 = tk.Label(root, text = " @Licença livre: Desenvolvido por GuilhermeSSouza - Software Engineer", bg='#FDF5E9')
+label3 = tk.Label(root, text = " @Open source: Desenvolvido por GuilhermeSSouza - Software Engineer", bg='#FDF5E9')
 label3.place(relx=0.30, rely=0.976)
 
 frame = tk.Frame(root, bg='#FDF5E9', bd=5)
@@ -379,7 +379,7 @@ R1.place(relx = 0, rely = 0.08, anchor = NW )
 
 #Input text code
 
-textinput = tk.Text(frame, font=("Times", "17", "bold italic"), undo=True, autoseparators=True, maxundo=-1)
+textinput = tk.Text(frame, font=("Helvetica", "17", "bold italic"), undo=True, autoseparators=True, maxundo=-1)
 textinput.place(relwidth=0.96, relheight=1)
 
 

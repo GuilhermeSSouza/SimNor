@@ -945,10 +945,10 @@ def expression(ast, symbols, builder, cint = False, neg=False, exception=False):
             #    print(ast['value'])
 
             if ast['value'] > limit:
-                raise RuntimeError('Valor acima do suportado: valor overflow')
+                raise RuntimeError('Valor acima do suportado: overflow')
                     
             if exception and ast['value'] <= 9223372036854775808:
-                raise RuntimeError('Valor acima do suportado: valor overflow')
+                raise RuntimeError('Valor acima do suportado:  overflow')
 
             r = ir.Constant(to_ir_type(ast['type']), ast['value'])
             return r

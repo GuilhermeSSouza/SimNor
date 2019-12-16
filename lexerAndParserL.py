@@ -156,7 +156,7 @@ def t_newline(t):
 # Error handling rule
 def t_error(t):
   erro.append('Illegal character: ' + t.value[0])
-  print('Illegal character: ' + t.value[0])
+  #print('Illegal character: ' + t.value[0])
   t.lexer.skip(1)
 
 # Build the lexer
@@ -427,7 +427,7 @@ def p_vdecls(p):
 
 def p_vdeclare(p):
   '''vdecl : TYPE GLOBID'''
-  print(p[1])
+  #print(p[1])
   p[0] = {node: vdecl, typ: inter, var: p[2]}
 
 
@@ -470,13 +470,13 @@ precedence = (
 #Sobrescrever yyerror do yacc (a fim de especializar  os erros do parser além - reiliciar ou descartar elementos após erros)
 def p_error(p):
   if p:
-    erro.append("Erro de sintaxe no token (ou no token anterior):   " + p.value + '\n Na linha :   '+str(p.lineno) )
+    erro.append("Erro de sintaxe no token (ou no token anterior):   " + p.value )
     #p.lineno = 0
-    print("Erro de sintaxe no token (ou no token anterior):  " + p.value  + str(p.lineno) )
+    #print("Erro de sintaxe no token (ou no token anterior):  " + p.value  + str(p.lineno) )
     
   else:
     erro.append('Erro de sintaxe no EOF')
-    print('Erro de sintaxe no EOF')
+    #print('Erro de sintaxe no EOF')
 
 ############# helper ############
 
